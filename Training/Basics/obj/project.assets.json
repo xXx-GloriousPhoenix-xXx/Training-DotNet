@@ -8,19 +8,24 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Yuri\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
+    "F:\\Games\\Visual Studio\\Installed\\Components\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Yuri\\source\\repos\\Training\\Basics\\Basics.csproj",
+      "projectUniqueName": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj",
       "projectName": "Basics",
-      "projectPath": "C:\\Users\\Yuri\\source\\repos\\Training\\Basics\\Basics.csproj",
-      "packagesPath": "C:\\Users\\Yuri\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Yuri\\source\\repos\\Training\\Basics\\obj\\",
+      "projectPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "F:\\Games\\Visual Studio\\Installed\\Components\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Yuri\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -67,7 +72,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

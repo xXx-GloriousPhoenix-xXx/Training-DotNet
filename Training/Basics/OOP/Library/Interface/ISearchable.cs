@@ -1,6 +1,6 @@
-﻿using Basics.OOP.Classes;
+﻿using Basics.OOP.Library.Classes;
 
-namespace Basics.OOP.Interfaces;
+namespace Basics.OOP.Library.Interface;
 public interface ISearchable
 {
     Book? FindBookByTitle(string title);

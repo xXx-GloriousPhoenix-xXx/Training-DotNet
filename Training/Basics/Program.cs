@@ -1,4 +1,4 @@
-﻿using Basics.Classes;
+﻿using Basics;
 
 public static class Test
 {

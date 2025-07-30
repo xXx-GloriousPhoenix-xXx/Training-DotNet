@@ -1,4 +1,4 @@
-﻿namespace Basics.OOP.Interfaces;
+﻿namespace Basics.OOP.School.Interfaces;
 public interface IPresentable
 {
     public void Introduce();
