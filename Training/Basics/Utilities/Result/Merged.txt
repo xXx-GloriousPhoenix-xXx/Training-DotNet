@@ -1,0 +1,394 @@
+using Basics.OOP.Interfaces;
+
+namespace Basics.OOP.Classes;
+
+public class Address(string country, string city, string street, ushort buildingNumber) : IPrintable
+{
+    public string Country { get; set; } = country;
+    public string City { get; set; } = city;
+    public string Street { get; set; } = street;
+    public ushort BuildingNumber { get; set; } = buildingNumber;
+    public void PrintInfo()
+    {
+        Console.WriteLine($"{Country} {City} {Street} {BuildingNumber}");
+    }
+}
+using Basics.OOP.Interfaces;
+namespace Basics.OOP.Classes;
+
+public class Book(string title, string author, ushort? year) : IReadable, IPrintable
+{
+    public string Title { get; set; } = title;
+    public string Author { get; set; } = author;
+    public ushort? Year { get; set; } = year;
+    public Book(string title) : this(title, "Unknown", null) { }
+    public void ReadCover()
+    {
+        Console.WriteLine($"{Title}, {Author}, {Year}");
+    }
+    public void PrintInfo() => ReadCover();
+}
+
+namespace Basics.OOP.Classes;
+public class Circle(double radius) : Shape("Circle")
+{
+    public double Radius { get; set; } = radius;
+    public override double GetArea()
+    {
+        return Math.PI * Math.Pow(Radius, 2);
+    }
+}
+
+namespace Basics.OOP.Classes;
+public class Customer(string name, string email, Address address) : User(name, email)
+{
+    public Address Address { get; set; } = address;
+    public override void PrintInfo()
+    {
+        base.PrintInfo();
+        Address.PrintInfo();
+    }
+}
+
+using Basics.OOP.Interfaces;
+namespace Basics.OOP.Classes;
+public class Library(Dictionary<string, List<Book>>? books) : ILibrarySearchable, IPrintable, ILibraryOperatable
+{
+    public Dictionary<string, List<Book>> Books { get; set; } = books ?? [];
+    public HashSet<string> Authors { get; set; } = books?.Values.SelectMany(list => list).Where(b => b.Author != null).Select(b => b.Author).ToHashSet() ?? [];
+    public void AddBook(Book book)
+    {
+        if (Books.TryGetValue(book.Author, out List<Book>? value))
+        {
+            value.Add(book);
+        }
+        else
+        {
+            Books.Add(book.Author, [book]);
+        }
+    }
+    public void RemoveBook(string author, string title)
+    {
+        Books[author].RemoveAll(b => b.Title != title);
+    }
+    public void RemoveAllBooksByAuthor(string author)
+    {
+        Books.Remove(author);
+    }
+    public void RemoveAllBooksWithTitle(string title)
+    {
+        foreach (var pair in Books)
+        {
+            pair.Value.RemoveAll(b => b.Title == title);
+        }
+    }
+    public IEnumerable<Book> FindAllBooksByTitle(string title)
+    {
+        return Books
+            .Values
+            .SelectMany(list => list)
+            .Where(b => b.Title == title);
+    }
+    public IEnumerable<Book> FindAllBooksByAuthor(string author)
+    {
+        return Books[author];
+    }
+    public IEnumerable<Book> FindAllBooksByYear(ushort? year)
+    {
+        return Books
+            .Values
+            .SelectMany(list => list)
+            .Where(b => b.Year == year);
+    }
+    public Book? FindBook(string title, string author, ushort? year)
+    {
+        return Books[author]
+            .FirstOrDefault(b => 
+                b.Title == title && 
+                b.Year == year
+            );
+    }
+    public void PrintInfo()
+    {
+        foreach (var pair in Books)
+        {
+            foreach (var book in pair.Value)
+            {
+                book.ReadCover();
+            }
+        }
+    }
+}
+using Basics.OOP.Interfaces;
+
+namespace Basics.OOP.Classes;
+
+public class Order(Customer customer, IEnumerable<Product>? products, DateOnly date) : IPrintable
+{
+    public Customer Customer { get; set; } = customer;
+    public IEnumerable<Product> Products { get; set; } = products ?? [];
+    public DateOnly Date { get; set; } = date;
+    public decimal GetTotalPrice() => Products.Sum(p => p.Price);
+    public int GetUniqueCount() => Products.DistinctBy(p => p.Name).Count();
+    public void PrintInfo()
+    {
+        Console.WriteLine($"Customer: {Customer.Name}");
+        var product_groups = Products.GroupBy(p => p.Name);
+        foreach (var group in product_groups)
+        {
+            var quantity = group.Count();
+            var price_single = group.First().Price;
+            Console.WriteLine(
+                $"{group.Key}x{quantity}:\t{price_single * quantity}"
+            );
+        }
+    }
+}
+
+using Basics.OOP.Interfaces;
+namespace Basics.OOP.Classes;
+public class Person(string name, ushort age) : IPresentable, IPrintable
+{
+    public string Name { get; set; } = name;
+    public ushort Age { get; set; } = age;
+    public virtual void Introduce()
+    {
+        Console.WriteLine($"My name is {Name}, I am {Age} years old");
+    }
+    public void PrintInfo() => Introduce();
+}
+
+using Basics.OOP.Interfaces;
+namespace Basics.OOP.Classes;
+//public class Product(string name, decimal price) : IPurchasable, IOrderable, IPrintable
+//{
+//    public string Name { get; set; } = name;
+//    public decimal Price { get; set; } = price;
+//    public void PrintInfo()
+//    {
+//        Console.WriteLine($"Name: {Name}, Price: {Price}");
+//    }
+//}
+
+public readonly record struct Product(string name, decimal price) : IPurchasable, IOrderable, IPrintable
+{
+    public string Name { get; } = name;
+    public decimal Price { get; } = price;
+    public void PrintInfo()
+    {
+        Console.WriteLine($"Name: {Name}, Price: {Price}");
+    }
+}
+namespace Basics.OOP.Classes;
+public class Rectangle(double width, double height) : Shape("Rectangle")
+{
+    public double Width { get; set; } = width;
+    public double Height { get; set; } = height;
+    public override double GetArea()
+    {
+        return Width * Height;
+    }
+}
+
+using Basics.OOP.Interfaces;
+namespace Basics.OOP.Classes;
+public abstract class Shape(string name) : IAreaComputable, IPrintable
+{
+    public string Name { get; set; } = name;
+    public abstract double GetArea();
+    public void PrintInfo()
+    {
+        Console.WriteLine($"{Name}: {GetArea()}");
+    }
+}
+
+using Basics.OOP.Interfaces;
+namespace Basics.OOP.Classes;
+public class Store(List<Product>? products, Queue<Order>? orders) : IStore, IPrintable, IStoreSearchable
+{
+    public List<Product> Catalogue { get; set; } = products ?? [];
+    public Queue<Order> Orders { get; set; } = orders ?? [];
+    public void AddProduct(Product product)
+    {
+        Catalogue.Add(product);
+    }
+    public void PlaceOrder(Order order)
+    {
+        Orders.Enqueue(order);
+    }
+    public Order ProcessOrder()
+    {
+        return Orders.Dequeue();
+    }
+    public IEnumerable<Order> GetOrdersByCustomer(string customerName)
+    {
+        return Orders.Where(o => o.Customer.Name == customerName);
+    }
+    public IEnumerable<Product> GetProductsCheaperThan(decimal maxPrice)
+    {
+        return Catalogue.Where(c => c.Price <= maxPrice);
+    }
+    public void PrintInfo()
+    {
+        foreach (var product in Catalogue)
+        {
+            product.PrintInfo();
+        }
+        foreach (var order in Orders)
+        {
+            order.PrintInfo();
+        }
+    }
+}
+namespace Basics.OOP.Classes;
+public class Student(string group, string name, ushort age) : Person(name, age)
+{
+    public string Group { get; set; } = group;
+    public override void Introduce()
+    {
+        Console.Write($"I am a student of a group {Group}, ");
+        base.Introduce();
+    }
+}
+
+namespace Basics.OOP.Classes;
+public class Teacher(string subject, string name, ushort age) : Person(name, age)
+{
+    public string Subject { get; set; } = subject;
+    public override void Introduce()
+    {
+        Console.Write($"I am a {Subject} teacher, ");
+        base.Introduce();
+    }
+}
+using Basics.OOP.Interfaces;
+
+namespace Basics.OOP.Classes;
+
+public class User(string name, string email) : IUserInfo, IPrintable
+{
+    public string Name { get; set; } = name;
+    public string Email { get; set; } = email;
+    public virtual void PrintInfo()
+    {
+        Console.WriteLine($"Name: {Name}, Email: {Email}");
+    }
+}
+namespace Basics.OOP.Interfaces;
+public interface IAreaComputable
+{
+    public double GetArea();
+}
+namespace Basics.OOP.Interfaces;
+public interface IUserInfo
+{
+    public string Name { get; set; }
+    public string Email { get; set; }
+}
+using Basics.OOP.Classes;
+namespace Basics.OOP.Interfaces;
+public interface ILibraryOperatable
+{
+    public void AddBook(Book book);
+    public void RemoveBook(string author, string title);
+    public void RemoveAllBooksByAuthor(string author);
+    public void RemoveAllBooksWithTitle(string title);
+}
+
+using Basics.OOP.Classes;
+
+namespace Basics.OOP.Interfaces;
+public interface ILibrarySearchable
+{
+    IEnumerable<Book> FindAllBooksByTitle(string title);
+    IEnumerable<Book> FindAllBooksByAuthor(string author);
+    IEnumerable<Book> FindAllBooksByYear(ushort? year);
+    Book? FindBook(string title, string author, ushort? year);
+}
+
+namespace Basics.OOP.Interfaces;
+
+public interface IOrderable { }
+namespace Basics.OOP.Interfaces;
+public interface IPresentable
+{
+    public void Introduce();
+}
+namespace Basics.OOP.Interfaces;
+public interface IPrintable
+{
+    public void PrintInfo();
+}
+namespace Basics.OOP.Interfaces;
+
+public interface IPurchasable
+{
+    public string Name { get; }
+    public decimal Price { get; }
+}
+
+namespace Basics.OOP.Interfaces;
+public interface IReadable
+{
+    public void ReadCover();
+}
+
+using Basics.OOP.Classes;
+
+namespace Basics.OOP.Interfaces;
+
+public interface IStore
+{
+    public void AddProduct(Product product);
+    public void PlaceOrder(Order order);
+    public Order ProcessOrder();
+}
+using Basics.OOP.Classes;
+
+namespace Basics.OOP.Interfaces;
+public interface IStoreSearchable
+{
+    public IEnumerable<Order> GetOrdersByCustomer(string customerId);
+    public IEnumerable<Product> GetProductsCheaperThan(decimal maxPrice);
+}
+using Basics.OOP.Interfaces;
+
+namespace Basics.OOP.Services;
+
+public static class PersonHandler
+{
+    public static void IntroduceAll(this List<IPresentable> presentables)
+    {
+        foreach (var presentable in presentables)
+        {
+            presentable.Introduce();
+        }
+    }
+}
+using Basics.OOP.Interfaces;
+
+namespace Basics.OOP.Services;
+public static class PrintHandler
+{
+    public static void PrintAll(this List<IPrintable> printables)
+    {
+        foreach (var printable in printables)
+        {
+            printable.PrintInfo();
+        }
+    }
+}
+using Basics.OOP.Classes;
+
+namespace Basics.OOP.Services;
+
+public static class ShapeHandler
+{
+    public static void PrintAllAreas(List<Shape> shapes)
+    {
+        foreach (var shape in shapes)
+        {
+            Console.WriteLine(shape.GetArea());
+        }
+    }
+}

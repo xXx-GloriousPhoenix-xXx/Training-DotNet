@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\basics\\oop\\classes\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\oop\\classes\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\basics\\oop\\interfaces\\iorderexportable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\oop\\interfaces\\iorderexportable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\basics\\oop\\classes\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\oop\\classes\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\basics\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\basics\\oop\\classes\\library.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\oop\\classes\\library.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +30,71 @@
       "DocumentGroups": [
         {
           "DockedWidth": 450,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "IOrderExportable.cs",
+              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\OOP\\Interfaces\\IOrderExportable.cs",
+              "RelativeDocumentMoniker": "Basics\\OOP\\Interfaces\\IOrderExportable.cs",
+              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\OOP\\Interfaces\\IOrderExportable.cs",
+              "RelativeToolTip": "Basics\\OOP\\Interfaces\\IOrderExportable.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T20:37:51.927Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Product.cs",
+              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\OOP\\Classes\\Product.cs",
+              "RelativeDocumentMoniker": "Basics\\OOP\\Classes\\Product.cs",
+              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\OOP\\Classes\\Product.cs",
+              "RelativeToolTip": "Basics\\OOP\\Classes\\Product.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T20:28:11.695Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Order.cs",
+              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\OOP\\Classes\\Order.cs",
+              "RelativeDocumentMoniker": "Basics\\OOP\\Classes\\Order.cs",
+              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\OOP\\Classes\\Order.cs",
+              "RelativeToolTip": "Basics\\OOP\\Classes\\Order.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAoAAABBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T19:57:25.32Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Library.cs",
+              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\OOP\\Classes\\Library.cs",
+              "RelativeDocumentMoniker": "Basics\\OOP\\Classes\\Library.cs",
+              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\OOP\\Classes\\Library.cs",
+              "RelativeToolTip": "Basics\\OOP\\Classes\\Library.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAYwEAAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T19:45:17.355Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Program.cs",
               "RelativeDocumentMoniker": "Basics\\Program.cs",
               "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Program.cs",
               "RelativeToolTip": "Basics\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-30T23:12:13.443Z",
+              "WhenOpened": "2025-07-31T12:17:21.532Z",
               "EditorCaption": ""
             },
             {
