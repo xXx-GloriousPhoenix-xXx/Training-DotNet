@@ -1,6 +1,8 @@
 ﻿using Basics.OOP.Interfaces;
+using System.Text.Json;
+using Newtonsoft.Json;
 namespace Basics.OOP.Classes;
-public class Library(Dictionary<string, List<Book>>? books) : ILibrarySearchable, IPrintable, ILibraryOperatable, ILibrarySerializable
+public class Library(Dictionary<string, List<Book>>? books) : ILibrarySearchable, IPrintable, ILibraryOperatable
 {
     public Dictionary<string, List<Book>> Books { get; set; } = books ?? [];
     public HashSet<string> Authors { get; set; } = books?.Values.SelectMany(list => list).Where(b => b.Author != null).Select(b => b.Author).ToHashSet() ?? [];
@@ -55,14 +57,6 @@ public class Library(Dictionary<string, List<Book>>? books) : ILibrarySearchable
                 b.Title == title && 
                 b.Year == year
             );
-    }
-    public void SaveToFile(string path)
-    {
-        throw new NotImplementedException();
-    }
-    public void LoadFromFile(string path)
-    {
-        throw new NotImplementedException();
     }
     public void PrintInfo()
     {

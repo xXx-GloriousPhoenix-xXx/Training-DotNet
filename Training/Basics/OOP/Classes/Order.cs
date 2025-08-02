@@ -5,25 +5,29 @@ namespace Basics.OOP.Classes;
 public class Order(Customer customer, Dictionary<Product, ushort>? products, DateOnly date) : IPrintable, IOrderExportable, IOrderOperatable
 {
     public Customer Customer { get; set; } = customer;
-    //public IEnumerable<Product> Products { get; set; } = products ?? [];
-    public Dictionary<Product, ushort> Products { get; set; } = 
+    public Dictionary<Product, ushort> Products { get; set; } = products ?? [];
     public DateOnly Date { get; set; } = date;
-    public decimal GetTotalPrice() => Products.Sum(p => p.Price);
-    public void AddProduct()
+    public decimal GetTotalPrice() => Products.Sum(pair => pair.Key.Price * pair.Value);
+    public void AddProduct(Product product)
     {
-        throw new NotImplementedException();
+        if (Products.TryGetValue(product, out ushort value))
+        {
+            Products[product] = ++value;
+        }
+        else
+        {
+            Products.Add(product, 0);
+        }
     }
-    public int GetUniqueCount() => Products.DistinctBy(p => p.Name).Count();
+    public int GetUniqueCount() => Products.Keys.Count;
     public void PrintInfo()
     {
         Console.WriteLine($"Customer: {Customer.Name}");
-        var product_groups = Products.GroupBy(p => p.Name);
-        foreach (var group in product_groups)
+        foreach (var product in Products)
         {
-            var quantity = group.Count();
-            var price_single = group.First().Price;
+            var total_price = product.Key.Price * product.Value;
             Console.WriteLine(
-                $"-\t{group.Key}x{quantity}:\t{price_single * quantity}"
+                $"-\t{product.Key.Name} x {product.Value}:\t{total_price}"
             );
         }
         Console.WriteLine($"Total:\t{GetTotalPrice()}");
@@ -32,13 +36,11 @@ public class Order(Customer customer, Dictionary<Product, ushort>? products, Dat
     {
         using var sw = new StreamWriter(path);
         sw.WriteLine($"Customer: {Customer.Name}");
-        var product_groups = Products.GroupBy(p => p.Name);
-        foreach (var group in product_groups)
+        foreach (var product in Products)
         {
-            var quantity = group.Count();
-            var price_single = group.First().Price;
+            var total_price = product.Key.Price * product.Value;
             sw.WriteLine(
-                $"-\t{group.Key}x{quantity}:\t{price_single * quantity}"
+                $"-\t{product.Key.Name} x {product.Value}:\t{total_price}"
             );
         }
         sw.WriteLine($"Total:\t{GetTotalPrice()}");
