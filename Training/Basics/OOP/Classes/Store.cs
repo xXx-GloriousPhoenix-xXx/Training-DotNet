@@ -12,6 +12,10 @@ public class Store(List<Product>? products, Queue<Order>? orders) : IStore, IPri
     {
         Orders.Enqueue(order);
     }
+    public void PlaceOrders(List<Order> orders)
+    {
+        orders.ForEach(o => PlaceOrder(o));
+    }
     public Order ProcessOrder()
     {
         return Orders.Dequeue();
@@ -34,5 +38,9 @@ public class Store(List<Product>? products, Queue<Order>? orders) : IStore, IPri
         {
             order.PrintInfo();
         }
+    }
+    public void PrintAllOrders()
+    {
+        Orders.ToList().ForEach(o => o.PrintInfo());
     }
 }
