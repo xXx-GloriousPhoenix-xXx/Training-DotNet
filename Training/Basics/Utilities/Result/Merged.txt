@@ -14,13 +14,21 @@ public class Address(string country, string city, string street, ushort building
     }
 }
 using Basics.OOP.Interfaces;
+using System.Text.Json.Serialization;
 namespace Basics.OOP.Classes;
 
-public class Book(string title, string author, ushort? year) : IReadable, IPrintable
+public class Book : IReadable, IPrintable
 {
-    public string Title { get; set; } = title;
-    public string Author { get; set; } = author;
-    public ushort? Year { get; set; } = year;
+    public string Title { get; set; }
+    public string Author { get; set; } 
+    public ushort? Year { get; set; }
+    [JsonConstructor]
+    public Book(string title, string author, ushort? year)
+    {
+        Title = title;
+        Author = author;
+        Year = year;
+    }
     public Book(string title) : this(title, "Unknown", null) { }
     public void ReadCover()
     {
@@ -51,11 +59,18 @@ public class Customer(string name, string email, Address address) : User(name, e
 }
 
 using Basics.OOP.Interfaces;
+using Basics.OOP.Exceptions;
 namespace Basics.OOP.Classes;
-public class Library(Dictionary<string, List<Book>>? books) : ILibrarySearchable, IPrintable, ILibraryOperatable
+public class Library : ILibrarySearchable, IPrintable, ILibraryOperatable
 {
-    public Dictionary<string, List<Book>> Books { get; set; } = books ?? [];
-    public HashSet<string> Authors { get; set; } = books?.Values.SelectMany(list => list).Where(b => b.Author != null).Select(b => b.Author).ToHashSet() ?? [];
+    public Dictionary<string, List<Book>> Books { get; set; } = []; //Author: List<Book>
+    public Library() { }
+    public Library(Dictionary<string, List<Book>> books) => Books = books;
+    public Library(List<Book> books) : this(
+        books
+            .GroupBy(b => b.Author)
+            .ToDictionary(g => g.Key, g => g.ToList())
+    ) { }
     public void AddBook(Book book)
     {
         if (Books.TryGetValue(book.Author, out List<Book>? value))
@@ -73,13 +88,29 @@ public class Library(Dictionary<string, List<Book>>? books) : ILibrarySearchable
     }
     public void RemoveAllBooksByAuthor(string author)
     {
-        Books.Remove(author);
+        if (Books.TryGetValue(author, out List<Book>? books))
+        {
+            Books.Remove(author);
+        }
+        else
+        {
+            throw new AuthorNotFoundException($"Books with author \"{author}\" not found");
+        }
     }
     public void RemoveAllBooksWithTitle(string title)
     {
+        var containFlag = false;
         foreach (var pair in Books)
         {
-            pair.Value.RemoveAll(b => b.Title == title);
+            if (pair.Value.Any(b => b.Title == title))
+            {
+                pair.Value.RemoveAll(b => b.Title == title);
+                containFlag = true;
+            }
+        }
+        if (!containFlag)
+        {
+            throw new TitleNotFoundException($"Books with title \"{title}\" not found");
         }
     }
     public IEnumerable<Book> FindAllBooksByTitle(string title)
@@ -108,43 +139,71 @@ public class Library(Dictionary<string, List<Book>>? books) : ILibrarySearchable
                 b.Year == year
             );
     }
+    public List<Book> Filter(Func<Book, bool> filter)
+    {
+        return Books.Values.SelectMany(list => list).Where(filter).ToList();
+    }
     public void PrintInfo()
     {
         foreach (var pair in Books)
         {
+            Console.WriteLine(pair.Key);
             foreach (var book in pair.Value)
             {
-                book.ReadCover();
+                Console.WriteLine($" - \"{book.Title}\", {book.Year}");
             }
         }
     }
 }
+
 using Basics.OOP.Interfaces;
+using System.Globalization;
 
 namespace Basics.OOP.Classes;
 
-public class Order(Customer customer, IEnumerable<Product>? products, DateOnly date) : IPrintable
+public class Order(Customer customer, Dictionary<Product, ushort>? products, DateOnly date) : IPrintable, IOrderExportable, IOrderOperatable
 {
+    public Order(Customer customer, List<Product> products, DateOnly date)
+    : this(customer,
+        products.GroupBy(p => p).ToDictionary(g => g.Key, g => (ushort)g.Count()),
+        date
+    ) { }
     public Customer Customer { get; set; } = customer;
-    public IEnumerable<Product> Products { get; set; } = products ?? [];
+    public Dictionary<Product, ushort> Products { get; set; } = products ?? [];
     public DateOnly Date { get; set; } = date;
-    public decimal GetTotalPrice() => Products.Sum(p => p.Price);
-    public int GetUniqueCount() => Products.DistinctBy(p => p.Name).Count();
-    public void PrintInfo()
+    public decimal GetTotalPrice() => Products.Sum(pair => pair.Key.Price * pair.Value);
+    public void AddProduct(Product product)
     {
-        Console.WriteLine($"Customer: {Customer.Name}");
-        var product_groups = Products.GroupBy(p => p.Name);
-        foreach (var group in product_groups)
+        if (Products.TryGetValue(product, out ushort value))
         {
-            var quantity = group.Count();
-            var price_single = group.First().Price;
-            Console.WriteLine(
-                $"{group.Key}x{quantity}:\t{price_single * quantity}"
-            );
+            Products[product] = ++value;
+        }
+        else
+        {
+            Products.Add(product, 0);
         }
     }
+    public int GetUniqueCount() => Products.Keys.Count;
+    public void PrintInfo(TextWriter writer)
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        writer.WriteLine($"Customer: {Customer.Name}");
+        foreach (var product in Products)
+        {
+            var total_price = product.Key.Price * product.Value;
+            writer.WriteLine(
+                $" - {product.Key.Name} x {product.Value}: {total_price}$"
+            );
+        }
+        writer.WriteLine($"Total: {GetTotalPrice()}$");
+    }
+    public void PrintInfo() => PrintInfo(Console.Out);
+    public void ExportToText(string path = "../../../OOP/Data/OrderWrite/Order.txt")
+    {
+        using var sw = new StreamWriter(path);
+        PrintInfo(sw);
+    }
 }
-
 using Basics.OOP.Interfaces;
 namespace Basics.OOP.Classes;
 public class Person(string name, ushort age) : IPresentable, IPrintable
@@ -160,16 +219,6 @@ public class Person(string name, ushort age) : IPresentable, IPrintable
 
 using Basics.OOP.Interfaces;
 namespace Basics.OOP.Classes;
-//public class Product(string name, decimal price) : IPurchasable, IOrderable, IPrintable
-//{
-//    public string Name { get; set; } = name;
-//    public decimal Price { get; set; } = price;
-//    public void PrintInfo()
-//    {
-//        Console.WriteLine($"Name: {Name}, Price: {Price}");
-//    }
-//}
-
 public readonly record struct Product(string name, decimal price) : IPurchasable, IOrderable, IPrintable
 {
     public string Name { get; } = name;
@@ -274,6 +323,41 @@ public class User(string name, string email) : IUserInfo, IPrintable
         Console.WriteLine($"Name: {Name}, Email: {Email}");
     }
 }
+namespace Basics.OOP.Exceptions;
+
+public class AuthorNotFoundException : Exception
+{
+    public AuthorNotFoundException() { }
+    public AuthorNotFoundException(string message) : base(message) { }
+    public AuthorNotFoundException(string message, Exception innerException) : base(message, innerException) { }
+}
+
+namespace Basics.OOP.Exceptions;
+
+public class LibraryLoadingException : Exception
+{
+    public LibraryLoadingException() { }
+    public LibraryLoadingException(string message) : base(message) { }
+    public LibraryLoadingException(string message, Exception innerException) : base(message, innerException) { }
+}
+namespace Basics.OOP.Exceptions;
+
+public class LibrarySavingException : Exception
+{
+    public LibrarySavingException() { }
+    public LibrarySavingException(string message) : base(message) { }
+    public LibrarySavingException(string message, Exception innerException) : base(message, innerException) { }
+}
+
+namespace Basics.OOP.Exceptions;
+
+public class TitleNotFoundException : Exception
+{
+    public TitleNotFoundException() { }
+    public TitleNotFoundException(string message) : base(message) { }
+    public TitleNotFoundException(string message, Exception innerException) : base(message, innerException) { }
+}
+
 namespace Basics.OOP.Interfaces;
 public interface IAreaComputable
 {
@@ -309,6 +393,21 @@ public interface ILibrarySearchable
 namespace Basics.OOP.Interfaces;
 
 public interface IOrderable { }
+namespace Basics.OOP.Interfaces;
+
+public interface IOrderExportable
+{
+    public void ExportToText(string path);
+}
+
+using Basics.OOP.Classes;
+
+namespace Basics.OOP.Interfaces;
+
+public interface IOrderOperatable
+{
+    public void AddProduct(Product product);
+}
 namespace Basics.OOP.Interfaces;
 public interface IPresentable
 {
@@ -351,6 +450,61 @@ public interface IStoreSearchable
     public IEnumerable<Order> GetOrdersByCustomer(string customerId);
     public IEnumerable<Product> GetProductsCheaperThan(decimal maxPrice);
 }
+using Basics.OOP.Classes;
+using System.Text.Json;
+using Basics.OOP.Exceptions;
+namespace Basics.OOP.Services;
+public static class LibraryHandler
+{
+    public static async Task SaveToFileAsync(this Library library, string path = "../../../OOP/Data/LibraryWrite/Library.json")
+    {
+        try
+        {
+            await using var fs = File.Create(path);
+            await JsonSerializer.SerializeAsync(fs, library);
+        }
+        catch (Exception e)
+        {
+            throw new LibrarySavingException(e.Message);
+        }
+    }
+    public static void SaveToFile(this Library library, string path = "../../../OOP/Data/LibraryWrite/Library.json")
+    {
+        try
+        {
+            using var fs = File.Create(path);
+            JsonSerializer.SerializeAsync(fs, library);
+        }
+        catch (Exception e)
+        {
+            throw new LibrarySavingException(e.Message);
+        }
+    }
+    public static async Task<Library?> LoadFromFileAsync(string path = "../../../OOP/Data/LibraryRead/Library.json")
+    {
+        try
+        {
+            await using var fs = File.OpenRead(path);
+            return await JsonSerializer.DeserializeAsync<Library>(fs);
+        }
+        catch (Exception e)
+        {
+            throw new LibraryLoadingException(e.Message);
+        }
+    }
+    public static Library? LoadFromFile(string path = "../../../OOP/Data/LibraryRead/Library.json")
+    {
+        try
+        {
+            using var fs = File.OpenRead(path);
+            return JsonSerializer.Deserialize<Library>(fs);
+        }
+        catch (Exception e)
+        {
+            throw new LibraryLoadingException(e.Message);
+        }
+    }
+}
 using Basics.OOP.Interfaces;
 
 namespace Basics.OOP.Services;
@@ -366,15 +520,15 @@ public static class PersonHandler
     }
 }
 using Basics.OOP.Interfaces;
-
 namespace Basics.OOP.Services;
 public static class PrintHandler
 {
-    public static void PrintAll(this List<IPrintable> printables)
+    public delegate void PrintDelegate(IPrintable printable);
+    public static void PrintAll(this List<IPrintable> printables, PrintDelegate printer)
     {
         foreach (var printable in printables)
         {
-            printable.PrintInfo();
+            printer(printable);
         }
     }
 }

@@ -27,3 +27,6 @@ F:\Programmes\Github\Reps\Training-DotNet\Training\Basics\obj\Debug\net8.0\refin
 F:\Programmes\Github\Reps\Training-DotNet\Training\Basics\obj\Debug\net8.0\Basics.pdb
 F:\Programmes\Github\Reps\Training-DotNet\Training\Basics\obj\Debug\net8.0\Basics.genruntimeconfig.cache
 F:\Programmes\Github\Reps\Training-DotNet\Training\Basics\obj\Debug\net8.0\ref\Basics.dll
+F:\Programmes\Github\Reps\Training-DotNet\Training\Basics\obj\Debug\net8.0\Basics.csproj.AssemblyReference.cache
+F:\Programmes\Github\Reps\Training-DotNet\Training\Basics\bin\Debug\net8.0\Newtonsoft.Json.dll
+F:\Programmes\Github\Reps\Training-DotNet\Training\Basics\obj\Debug\net8.0\Basics.csproj.Up2Date

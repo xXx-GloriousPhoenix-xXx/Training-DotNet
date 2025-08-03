@@ -1,21 +1,55 @@
 ﻿using Basics.OOP.Classes;
 using System.Text.Json;
+using Basics.OOP.Exceptions;
 namespace Basics.OOP.Services;
 public static class LibraryHandler
 {
-    public static async Task SaveToFileAsync(this Library library, string path)
+    public static async Task SaveToFileAsync(this Library library, string path = "../../../OOP/Data/LibraryWrite/Library.json")
     {
-        await using var fs = File.Create(path);
-        await JsonSerializer.SerializeAsync(fs, library);
+        try
+        {
+            await using var fs = File.Create(path);
+            await JsonSerializer.SerializeAsync(fs, library);
+        }
+        catch (Exception e)
+        {
+            throw new LibrarySavingException(e.Message);
+        }
     }
-    public static async Task<Library?> LoadFromFile(string path)
+    public static void SaveToFile(this Library library, string path = "../../../OOP/Data/LibraryWrite/Library.json")
     {
-        await using var fs = File.OpenRead(path);
-        return await JsonSerializer.DeserializeAsync<Library>(fs);
+        try
+        {
+            using var fs = File.Create(path);
+            JsonSerializer.SerializeAsync(fs, library);
+        }
+        catch (Exception e)
+        {
+            throw new LibrarySavingException(e.Message);
+        }
     }
-    public static List<Book> Filter(this Library library, Func<Book, bool> filter)
+    public static async Task<Library?> LoadFromFileAsync(string path = "../../../OOP/Data/LibraryRead/Library.json")
     {
-        return library.Books.Values.SelectMany(list => list).Where(filter).ToList();
+        try
+        {
+            await using var fs = File.OpenRead(path);
+            return await JsonSerializer.DeserializeAsync<Library>(fs);
+        }
+        catch (Exception e)
+        {
+            throw new LibraryLoadingException(e.Message);
+        }
     }
-
+    public static Library? LoadFromFile(string path = "../../../OOP/Data/LibraryRead/Library.json")
+    {
+        try
+        {
+            using var fs = File.OpenRead(path);
+            return JsonSerializer.Deserialize<Library>(fs);
+        }
+        catch (Exception e)
+        {
+            throw new LibraryLoadingException(e.Message);
+        }
+    }
 }

@@ -1,0 +1,5 @@
+Customer: Roman
+ - IPhone x 1: 500.00$
+ - Samsung x 2: 600.00$
+ - Xiaomi x 3: 450.00$
+Total: 1550.00$

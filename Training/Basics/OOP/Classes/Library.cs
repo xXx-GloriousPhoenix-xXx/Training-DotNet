@@ -1,11 +1,16 @@
 ﻿using Basics.OOP.Interfaces;
-using System.Text.Json;
-using Newtonsoft.Json;
+using Basics.OOP.Exceptions;
 namespace Basics.OOP.Classes;
-public class Library(Dictionary<string, List<Book>>? books) : ILibrarySearchable, IPrintable, ILibraryOperatable
+public class Library : ILibrarySearchable, IPrintable, ILibraryOperatable
 {
-    public Dictionary<string, List<Book>> Books { get; set; } = books ?? [];
-    public HashSet<string> Authors { get; set; } = books?.Values.SelectMany(list => list).Where(b => b.Author != null).Select(b => b.Author).ToHashSet() ?? [];
+    public Dictionary<string, List<Book>> Books { get; set; } = []; //Author: List<Book>
+    public Library() { }
+    public Library(Dictionary<string, List<Book>> books) => Books = books;
+    public Library(List<Book> books) : this(
+        books
+            .GroupBy(b => b.Author)
+            .ToDictionary(g => g.Key, g => g.ToList())
+    ) { }
     public void AddBook(Book book)
     {
         if (Books.TryGetValue(book.Author, out List<Book>? value))
@@ -23,13 +28,29 @@ public class Library(Dictionary<string, List<Book>>? books) : ILibrarySearchable
     }
     public void RemoveAllBooksByAuthor(string author)
     {
-        Books.Remove(author);
+        if (Books.TryGetValue(author, out List<Book>? books))
+        {
+            Books.Remove(author);
+        }
+        else
+        {
+            throw new AuthorNotFoundException($"Books with author \"{author}\" not found");
+        }
     }
     public void RemoveAllBooksWithTitle(string title)
     {
+        var containFlag = false;
         foreach (var pair in Books)
         {
-            pair.Value.RemoveAll(b => b.Title == title);
+            if (pair.Value.Any(b => b.Title == title))
+            {
+                pair.Value.RemoveAll(b => b.Title == title);
+                containFlag = true;
+            }
+        }
+        if (!containFlag)
+        {
+            throw new TitleNotFoundException($"Books with title \"{title}\" not found");
         }
     }
     public IEnumerable<Book> FindAllBooksByTitle(string title)
@@ -58,13 +79,18 @@ public class Library(Dictionary<string, List<Book>>? books) : ILibrarySearchable
                 b.Year == year
             );
     }
+    public List<Book> Filter(Func<Book, bool> filter)
+    {
+        return Books.Values.SelectMany(list => list).Where(filter).ToList();
+    }
     public void PrintInfo()
     {
         foreach (var pair in Books)
         {
+            Console.WriteLine(pair.Key);
             foreach (var book in pair.Value)
             {
-                book.ReadCover();
+                Console.WriteLine($" - \"{book.Title}\", {book.Year}");
             }
         }
     }
