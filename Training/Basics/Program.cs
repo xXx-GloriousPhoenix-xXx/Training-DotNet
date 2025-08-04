@@ -1,5 +1,5 @@
-﻿using Basics.OOP.Classes;
-using Basics.OOP.Services;
+﻿using Basics.Classes;
+using Basics.Services;
 using Basics.Utilities;
 
 namespace Basics;
@@ -48,9 +48,15 @@ public static class Test
     }
     public static void Main()
     {
-        Directory.GetDirectories("../../../OOP").ToList().Merge();
+        Directory.GetDirectories("../../../").ToList().Merge();
 
-        var testcase = TestLibrarySaveLoad;
+        //var testcase = TestLibrarySaveLoad;
         //testcase();
+
+        var res = ProductHandler.GenerateRandomProducts(100);
+        foreach (var el in res)
+        {
+            el.PrintInfo();
+        }
     }
 } 

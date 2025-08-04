@@ -1,6 +1,6 @@
-using Basics.OOP.Interfaces;
+using Basics.Interfaces;
 
-namespace Basics.OOP.Classes;
+namespace Basics.Classes;
 
 public class Address(string country, string city, string street, ushort buildingNumber) : IPrintable
 {
@@ -13,14 +13,14 @@ public class Address(string country, string city, string street, ushort building
         Console.WriteLine($"{Country} {City} {Street} {BuildingNumber}");
     }
 }
-using Basics.OOP.Interfaces;
+using Basics.Interfaces;
 using System.Text.Json.Serialization;
-namespace Basics.OOP.Classes;
+namespace Basics.Classes;
 
 public class Book : IReadable, IPrintable
 {
     public string Title { get; set; }
-    public string Author { get; set; } 
+    public string Author { get; set; }
     public ushort? Year { get; set; }
     [JsonConstructor]
     public Book(string title, string author, ushort? year)
@@ -37,7 +37,7 @@ public class Book : IReadable, IPrintable
     public void PrintInfo() => ReadCover();
 }
 
-namespace Basics.OOP.Classes;
+namespace Basics.Classes;
 public class Circle(double radius) : Shape("Circle")
 {
     public double Radius { get; set; } = radius;
@@ -47,7 +47,7 @@ public class Circle(double radius) : Shape("Circle")
     }
 }
 
-namespace Basics.OOP.Classes;
+namespace Basics.Classes;
 public class Customer(string name, string email, Address address) : User(name, email)
 {
     public Address Address { get; set; } = address;
@@ -58,9 +58,9 @@ public class Customer(string name, string email, Address address) : User(name, e
     }
 }
 
-using Basics.OOP.Interfaces;
-using Basics.OOP.Exceptions;
-namespace Basics.OOP.Classes;
+using Basics.Exceptions;
+using Basics.Interfaces;
+namespace Basics.Classes;
 public class Library : ILibrarySearchable, IPrintable, ILibraryOperatable
 {
     public Dictionary<string, List<Book>> Books { get; set; } = []; //Author: List<Book>
@@ -70,7 +70,8 @@ public class Library : ILibrarySearchable, IPrintable, ILibraryOperatable
         books
             .GroupBy(b => b.Author)
             .ToDictionary(g => g.Key, g => g.ToList())
-    ) { }
+    )
+    { }
     public void AddBook(Book book)
     {
         if (Books.TryGetValue(book.Author, out List<Book>? value))
@@ -134,8 +135,8 @@ public class Library : ILibrarySearchable, IPrintable, ILibraryOperatable
     public Book? FindBook(string title, string author, ushort? year)
     {
         return Books[author]
-            .FirstOrDefault(b => 
-                b.Title == title && 
+            .FirstOrDefault(b =>
+                b.Title == title &&
                 b.Year == year
             );
     }
@@ -154,12 +155,21 @@ public class Library : ILibrarySearchable, IPrintable, ILibraryOperatable
             }
         }
     }
+    public List<Book> FilterParallel(Func<Book, bool> filter)
+    {
+        return Books
+            .Values
+            .AsParallel()
+            .SelectMany(list => list)
+            .Where(filter)
+            .ToList();
+    }
 }
 
-using Basics.OOP.Interfaces;
+using Basics.Interfaces;
 using System.Globalization;
 
-namespace Basics.OOP.Classes;
+namespace Basics.Classes;
 
 public class Order(Customer customer, Dictionary<Product, ushort>? products, DateOnly date) : IPrintable, IOrderExportable, IOrderOperatable
 {
@@ -167,7 +177,8 @@ public class Order(Customer customer, Dictionary<Product, ushort>? products, Dat
     : this(customer,
         products.GroupBy(p => p).ToDictionary(g => g.Key, g => (ushort)g.Count()),
         date
-    ) { }
+    )
+    { }
     public Customer Customer { get; set; } = customer;
     public Dictionary<Product, ushort> Products { get; set; } = products ?? [];
     public DateOnly Date { get; set; } = date;
@@ -198,14 +209,34 @@ public class Order(Customer customer, Dictionary<Product, ushort>? products, Dat
         writer.WriteLine($"Total: {GetTotalPrice()}$");
     }
     public void PrintInfo() => PrintInfo(Console.Out);
-    public void ExportToText(string path = "../../../OOP/Data/OrderWrite/Order.txt")
+    public void ExportToText(string path = "../../../Data/OrderWrite/Order.txt")
     {
         using var sw = new StreamWriter(path);
         PrintInfo(sw);
     }
+    public async Task PrintInfoAsync(TextWriter writer)
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        await writer.WriteLineAsync($"Customer: {Customer.Name}");
+        foreach (var product in Products)
+        {
+            var total_price = product.Key.Price * product.Value;
+            await writer.WriteLineAsync(
+                $" - {product.Key.Name} x {product.Value}: {total_price}$"
+            );
+        }
+        await writer.WriteLineAsync($"Total: {GetTotalPrice()}$");
+    }
+    public async Task PrintInfoAsync() => await PrintInfoAsync(Console.Out);
+    public async Task ExportToTextAsync(string path = "../../../Data/OrderWrite/Order.txt")
+    {
+        await using var sw = new StreamWriter(path);
+        await PrintInfoAsync(sw);
+    }
 }
-using Basics.OOP.Interfaces;
-namespace Basics.OOP.Classes;
+using Basics.Interfaces;
+
+namespace Basics.Classes;
 public class Person(string name, ushort age) : IPresentable, IPrintable
 {
     public string Name { get; set; } = name;
@@ -217,8 +248,9 @@ public class Person(string name, ushort age) : IPresentable, IPrintable
     public void PrintInfo() => Introduce();
 }
 
-using Basics.OOP.Interfaces;
-namespace Basics.OOP.Classes;
+using Basics.Interfaces;
+
+namespace Basics.Classes;
 public readonly record struct Product(string name, decimal price) : IPurchasable, IOrderable, IPrintable
 {
     public string Name { get; } = name;
@@ -228,7 +260,7 @@ public readonly record struct Product(string name, decimal price) : IPurchasable
         Console.WriteLine($"Name: {Name}, Price: {Price}");
     }
 }
-namespace Basics.OOP.Classes;
+namespace Basics.Classes;
 public class Rectangle(double width, double height) : Shape("Rectangle")
 {
     public double Width { get; set; } = width;
@@ -239,8 +271,9 @@ public class Rectangle(double width, double height) : Shape("Rectangle")
     }
 }
 
-using Basics.OOP.Interfaces;
-namespace Basics.OOP.Classes;
+using Basics.Interfaces;
+
+namespace Basics.Classes;
 public abstract class Shape(string name) : IAreaComputable, IPrintable
 {
     public string Name { get; set; } = name;
@@ -251,12 +284,13 @@ public abstract class Shape(string name) : IAreaComputable, IPrintable
     }
 }
 
-using Basics.OOP.Interfaces;
-namespace Basics.OOP.Classes;
-public class Store(List<Product>? products, Queue<Order>? orders) : IStore, IPrintable, IStoreSearchable
+using System.Collections.Concurrent;
+using Basics.Interfaces;
+namespace Basics.Classes;
+public class Store(List<Product>? products, ConcurrentQueue<Order>? orders) : IStore, IPrintable, IStoreSearchable
 {
     public List<Product> Catalogue { get; set; } = products ?? [];
-    public Queue<Order> Orders { get; set; } = orders ?? [];
+    public ConcurrentQueue<Order> Orders { get; set; } = orders ?? [];
     public void AddProduct(Product product)
     {
         Catalogue.Add(product);
@@ -271,7 +305,14 @@ public class Store(List<Product>? products, Queue<Order>? orders) : IStore, IPri
     }
     public Order ProcessOrder()
     {
-        return Orders.Dequeue();
+        if (Orders.TryDequeue(out var value))
+        {
+            return value;
+        }
+        else
+        {
+            throw new ArgumentNullException();
+        }
     }
     public IEnumerable<Order> GetOrdersByCustomer(string customerName)
     {
@@ -297,7 +338,7 @@ public class Store(List<Product>? products, Queue<Order>? orders) : IStore, IPri
         Orders.ToList().ForEach(o => o.PrintInfo());
     }
 }
-namespace Basics.OOP.Classes;
+namespace Basics.Classes;
 public class Student(string group, string name, ushort age) : Person(name, age)
 {
     public string Group { get; set; } = group;
@@ -308,7 +349,7 @@ public class Student(string group, string name, ushort age) : Person(name, age)
     }
 }
 
-namespace Basics.OOP.Classes;
+namespace Basics.Classes;
 public class Teacher(string subject, string name, ushort age) : Person(name, age)
 {
     public string Subject { get; set; } = subject;
@@ -318,9 +359,9 @@ public class Teacher(string subject, string name, ushort age) : Person(name, age
         base.Introduce();
     }
 }
-using Basics.OOP.Interfaces;
+using Basics.Interfaces;
 
-namespace Basics.OOP.Classes;
+namespace Basics.Classes;
 
 public class User(string name, string email) : IUserInfo, IPrintable
 {
@@ -331,7 +372,7 @@ public class User(string name, string email) : IUserInfo, IPrintable
         Console.WriteLine($"Name: {Name}, Email: {Email}");
     }
 }
-namespace Basics.OOP.Exceptions;
+namespace Basics.Exceptions;
 
 public class AuthorNotFoundException : Exception
 {
@@ -340,7 +381,7 @@ public class AuthorNotFoundException : Exception
     public AuthorNotFoundException(string message, Exception innerException) : base(message, innerException) { }
 }
 
-namespace Basics.OOP.Exceptions;
+namespace Basics.Exceptions;
 
 public class LibraryLoadingException : Exception
 {
@@ -348,7 +389,7 @@ public class LibraryLoadingException : Exception
     public LibraryLoadingException(string message) : base(message) { }
     public LibraryLoadingException(string message, Exception innerException) : base(message, innerException) { }
 }
-namespace Basics.OOP.Exceptions;
+namespace Basics.Exceptions;
 
 public class LibrarySavingException : Exception
 {
@@ -357,7 +398,7 @@ public class LibrarySavingException : Exception
     public LibrarySavingException(string message, Exception innerException) : base(message, innerException) { }
 }
 
-namespace Basics.OOP.Exceptions;
+namespace Basics.Exceptions;
 
 public class TitleNotFoundException : Exception
 {
@@ -366,19 +407,20 @@ public class TitleNotFoundException : Exception
     public TitleNotFoundException(string message, Exception innerException) : base(message, innerException) { }
 }
 
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 public interface IAreaComputable
 {
     public double GetArea();
 }
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 public interface IUserInfo
 {
     public string Name { get; set; }
     public string Email { get; set; }
 }
-using Basics.OOP.Classes;
-namespace Basics.OOP.Interfaces;
+using Basics.Classes;
+
+namespace Basics.Interfaces;
 public interface ILibraryOperatable
 {
     public void AddBook(Book book);
@@ -387,9 +429,9 @@ public interface ILibraryOperatable
     public void RemoveAllBooksWithTitle(string title);
 }
 
-using Basics.OOP.Classes;
+using Basics.Classes;
 
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 public interface ILibrarySearchable
 {
     IEnumerable<Book> FindAllBooksByTitle(string title);
@@ -398,35 +440,35 @@ public interface ILibrarySearchable
     Book? FindBook(string title, string author, ushort? year);
 }
 
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 
 public interface IOrderable { }
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 
 public interface IOrderExportable
 {
     public void ExportToText(string path);
 }
 
-using Basics.OOP.Classes;
+using Basics.Classes;
 
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 
 public interface IOrderOperatable
 {
     public void AddProduct(Product product);
 }
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 public interface IPresentable
 {
     public void Introduce();
 }
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 public interface IPrintable
 {
     public void PrintInfo();
 }
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 
 public interface IPurchasable
 {
@@ -434,15 +476,15 @@ public interface IPurchasable
     public decimal Price { get; }
 }
 
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 public interface IReadable
 {
     public void ReadCover();
 }
 
-using Basics.OOP.Classes;
+using Basics.Classes;
 
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 
 public interface IStore
 {
@@ -450,33 +492,260 @@ public interface IStore
     public void PlaceOrder(Order order);
     public Order ProcessOrder();
 }
-using Basics.OOP.Classes;
+using Basics.Classes;
 
-namespace Basics.OOP.Interfaces;
+namespace Basics.Interfaces;
 public interface IStoreSearchable
 {
     public IEnumerable<Order> GetOrdersByCustomer(string customerId);
     public IEnumerable<Product> GetProductsCheaperThan(decimal maxPrice);
 }
-using Basics.OOP.Classes;
+{
+  "format": 1,
+  "restore": {
+    "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj": {}
+  },
+  "projects": {
+    "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj",
+        "projectName": "Basics",
+        "projectPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "F:\\Games\\Visual Studio\\Installed\\Components\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
+    <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
+    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
+    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Admin\.nuget\packages\;F:\Games\Visual Studio\Installed\Components\NuGetPackages</NuGetPackageFolders>
+    <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.9.1</NuGetToolVersion>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <SourceRoot Include="C:\Users\Admin\.nuget\packages\" />
+    <SourceRoot Include="F:\Games\Visual Studio\Installed\Components\NuGetPackages\" />
+  </ItemGroup>
+</Project>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" />
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Newtonsoft.Json/13.0.3": {
+      "sha512": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
+      "type": "package",
+      "path": "newtonsoft.json/13.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "README.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/net6.0/Newtonsoft.Json.dll",
+        "lib/net6.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "newtonsoft.json.13.0.3.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "Newtonsoft.Json >= 13.0.3"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Admin\\.nuget\\packages\\": {},
+    "F:\\Games\\Visual Studio\\Installed\\Components\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj",
+      "projectName": "Basics",
+      "projectPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "F:\\Games\\Visual Studio\\Installed\\Components\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "dependencies": {
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.3, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
+{
+  "version": 2,
+  "dgSpecHash": "62XkJDXETErg+GyzJPOJnfVu7q2IoUembFDGYuHsffkQLUNZYTNMkmRDhPWd8XMXhOBFyMXl/jNZSNtfOtlUsw==",
+  "success": true,
+  "projectFilePath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
 using System.Text.Json;
-using Basics.OOP.Exceptions;
-namespace Basics.OOP.Services;
+using Basics.Exceptions;
+using Basics.Classes;
+namespace Basics.Services;
 public static class LibraryHandler
 {
-    public static async Task SaveToFileAsync(this Library library, string path = "../../../OOP/Data/LibraryWrite/Library.json")
-    {
-        try
-        {
-            await using var fs = File.Create(path);
-            await JsonSerializer.SerializeAsync(fs, library);
-        }
-        catch (Exception e)
-        {
-            throw new LibrarySavingException(e.Message);
-        }
-    }
-    public static void SaveToFile(this Library library, string path = "../../../OOP/Data/LibraryWrite/Library.json")
+    public static void SaveToFile(this Library library, string path = "../../../Data/LibraryWrite/Library.json")
     {
         try
         {
@@ -488,19 +757,19 @@ public static class LibraryHandler
             throw new LibrarySavingException(e.Message);
         }
     }
-    public static async Task<Library?> LoadFromFileAsync(string path = "../../../OOP/Data/LibraryRead/Library.json")
+    public static async Task SaveToFileAsync(this Library library, string path = "../../../Data/LibraryWrite/Library.json")
     {
         try
         {
-            await using var fs = File.OpenRead(path);
-            return await JsonSerializer.DeserializeAsync<Library>(fs);
+            await using var fs = File.Create(path);
+            await JsonSerializer.SerializeAsync(fs, library);
         }
         catch (Exception e)
         {
-            throw new LibraryLoadingException(e.Message);
+            throw new LibrarySavingException(e.Message);
         }
     }
-    public static Library? LoadFromFile(string path = "../../../OOP/Data/LibraryRead/Library.json")
+    public static Library? LoadFromFile(string path = "../../../Data/LibraryRead/Library.json")
     {
         try
         {
@@ -512,10 +781,28 @@ public static class LibraryHandler
             throw new LibraryLoadingException(e.Message);
         }
     }
+    public static async Task<Library?> LoadFromFileAsync(string path = "../../../Data/LibraryRead/Library.json")
+    {
+        try
+        {
+            await using var fs = File.OpenRead(path);
+            return await JsonSerializer.DeserializeAsync<Library>(fs);
+        }
+        catch (Exception e)
+        {
+            throw new LibraryLoadingException(e.Message);
+        }
+    }
+    public static async Task<List<Library>> LoadAllLibrariesAsync(List<string> paths)
+    {
+        var libraryTasks = paths.Select(LoadFromFileAsync);
+        var libraries = await Task.WhenAll(libraryTasks);
+        return libraries.Where(lib => lib is not null).ToList()!;
+    }
 }
-using Basics.OOP.Interfaces;
+using Basics.Interfaces;
 
-namespace Basics.OOP.Services;
+namespace Basics.Services;
 
 public static class PersonHandler
 {
@@ -527,8 +814,9 @@ public static class PersonHandler
         }
     }
 }
-using Basics.OOP.Interfaces;
-namespace Basics.OOP.Services;
+using Basics.Interfaces;
+
+namespace Basics.Services;
 public static class PrintHandler
 {
     public delegate void PrintDelegate(IPrintable printable);
@@ -540,9 +828,46 @@ public static class PrintHandler
         }
     }
 }
-using Basics.OOP.Classes;
+using System.Collections.Concurrent;
+using Basics.Classes;
 
-namespace Basics.OOP.Services;
+namespace Basics.Services;
+public static class ProductHandler
+{
+    public static List<Product> GenerateRandomProducts(int productsQuantity)
+    {
+        var bag = new ConcurrentBag<Product>();
+        var tasks = new List<Task>();
+
+        var threadCount = Environment.ProcessorCount;
+        var prodPerThread = productsQuantity / threadCount;
+        var prodRemainder = productsQuantity % threadCount;
+
+        for (var i = 0; i < threadCount; i++)
+        {
+            var threadIndex = i;
+            tasks.Add(Task.Run(() =>
+            {
+                var rnd = Random.Shared;
+                var prodsToCreate = prodPerThread + (threadIndex < prodRemainder ? 1 : 0);
+                for (var j = 0; j < prodsToCreate; j++)
+                {
+                    var prodName = $"Name_{threadIndex}_{j}";
+                    var prodPrice = 10 * threadIndex + j;
+                    var p = new Product(prodName, prodPrice);
+                    bag.Add(p);
+                }
+            }));
+        }
+
+        Task.WaitAll([.. tasks]);
+        return [.. bag];
+    }
+}
+
+using Basics.Classes;
+
+namespace Basics.Services;
 
 public static class ShapeHandler
 {
@@ -551,6 +876,39 @@ public static class ShapeHandler
         foreach (var shape in shapes)
         {
             Console.WriteLine(shape.GetArea());
+        }
+    }
+}
+using Basics.Classes;
+
+namespace Basics.Services;
+public static class StoreHandler
+{
+    public static async Task ExportAllOrdersAsync(Store store, string folderPath)
+    {
+        var quantity = store.Orders.Count;
+        var taskList = store.Orders.Select((o, i) =>
+        {
+            var path = Path.Combine(folderPath, $"Order_{i + 1}");
+            return o.ExportToTextAsync(path);
+        });
+        await Task.WhenAll(taskList);
+    }
+}
+
+namespace Basics.Utilities;
+public static class MergeFiles
+{
+    public static void Merge(this List<string> directoryPaths, string resultPath = "../../../Utilities/Result/Merged.txt")
+    {
+        using var sw = new StreamWriter(resultPath);
+        foreach (var directoryPath in directoryPaths)
+        {
+            foreach (var file in Directory.GetFiles(directoryPath))
+            {
+                using var sr = new StreamReader(file);
+                sw.WriteLine(sr.ReadToEnd());
+            }
         }
     }
 }
