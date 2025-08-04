@@ -1,9 +1,10 @@
-﻿using Basics.OOP.Interfaces;
+﻿using System.Collections.Concurrent;
+using Basics.OOP.Interfaces;
 namespace Basics.OOP.Classes;
-public class Store(List<Product>? products, Queue<Order>? orders) : IStore, IPrintable, IStoreSearchable
+public class Store(List<Product>? products, ConcurrentQueue<Order>? orders) : IStore, IPrintable, IStoreSearchable
 {
     public List<Product> Catalogue { get; set; } = products ?? [];
-    public Queue<Order> Orders { get; set; } = orders ?? [];
+    public ConcurrentQueue<Order> Orders { get; set; } = orders ?? [];
     public void AddProduct(Product product)
     {
         Catalogue.Add(product);
@@ -18,7 +19,14 @@ public class Store(List<Product>? products, Queue<Order>? orders) : IStore, IPri
     }
     public Order ProcessOrder()
     {
-        return Orders.Dequeue();
+        if (Orders.TryDequeue(out var value))
+        {
+            return value;
+        }
+        else
+        {
+            throw new ArgumentNullException();
+        }
     }
     public IEnumerable<Order> GetOrdersByCustomer(string customerName)
     {

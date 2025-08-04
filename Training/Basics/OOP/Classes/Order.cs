@@ -45,4 +45,23 @@ public class Order(Customer customer, Dictionary<Product, ushort>? products, Dat
         using var sw = new StreamWriter(path);
         PrintInfo(sw);
     }
+    public async Task PrintInfoAsync(TextWriter writer)
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        await writer.WriteLineAsync($"Customer: {Customer.Name}");
+        foreach (var product in Products)
+        {
+            var total_price = product.Key.Price * product.Value;
+            await writer.WriteLineAsync(
+                $" - {product.Key.Name} x {product.Value}: {total_price}$"
+            );
+        }
+        await writer.WriteLineAsync($"Total: {GetTotalPrice()}$");
+    }
+    public async Task PrintInfoAsync() => await PrintInfoAsync(Console.Out);
+    public async Task ExportToTextAsync(string path = "../../../OOP/Data/OrderWrite/Order.txt")
+    {
+        await using var sw = new StreamWriter(path);
+        await PrintInfoAsync(sw);
+    }
 }

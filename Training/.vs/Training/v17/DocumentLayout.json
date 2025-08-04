@@ -7,8 +7,16 @@
       "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\oop\\classes\\store.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|d:\\coding\\projects\\training-dotnet\\training\\basics\\oop\\services\\libraryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\oop\\services\\libraryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|d:\\coding\\projects\\training-dotnet\\training\\basics\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|d:\\coding\\projects\\training-dotnet\\training\\basics\\oop\\services\\storehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\oop\\services\\storehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,9 +36,35 @@
               "RelativeDocumentMoniker": "Basics\\OOP\\Classes\\Store.cs",
               "ToolTip": "D:\\Coding\\Projects\\Training-DotNet\\Training\\Basics\\OOP\\Classes\\Store.cs",
               "RelativeToolTip": "Basics\\OOP\\Classes\\Store.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAIAwwBsAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-03T14:34:53.269Z",
+              "WhenOpened": "2025-08-04T14:17:02.402Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LibraryHandler.cs",
+              "DocumentMoniker": "D:\\Coding\\Projects\\Training-DotNet\\Training\\Basics\\OOP\\Services\\LibraryHandler.cs",
+              "RelativeDocumentMoniker": "Basics\\OOP\\Services\\LibraryHandler.cs",
+              "ToolTip": "D:\\Coding\\Projects\\Training-DotNet\\Training\\Basics\\OOP\\Services\\LibraryHandler.cs",
+              "RelativeToolTip": "Basics\\OOP\\Services\\LibraryHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-04T13:54:20.475Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StoreHandler.cs",
+              "DocumentMoniker": "D:\\Coding\\Projects\\Training-DotNet\\Training\\Basics\\OOP\\Services\\StoreHandler.cs",
+              "RelativeDocumentMoniker": "Basics\\OOP\\Services\\StoreHandler.cs",
+              "ToolTip": "D:\\Coding\\Projects\\Training-DotNet\\Training\\Basics\\OOP\\Services\\StoreHandler.cs",
+              "RelativeToolTip": "Basics\\OOP\\Services\\StoreHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-04T13:26:05.439Z",
               "EditorCaption": ""
             },
             {
@@ -43,13 +77,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Coding\\Projects\\Training-DotNet\\Training\\Basics\\Program.cs",
               "RelativeDocumentMoniker": "Basics\\Program.cs",
               "ToolTip": "D:\\Coding\\Projects\\Training-DotNet\\Training\\Basics\\Program.cs",
               "RelativeToolTip": "Basics\\Program.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAqwDgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-02T22:58:55.527Z",
               "EditorCaption": ""
