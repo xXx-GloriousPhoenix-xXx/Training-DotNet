@@ -51,11 +51,16 @@ public class Store(List<Product>? products, ConcurrentQueue<Order>? orders) : IS
     {
         Orders.ToList().ForEach(o => o.PrintInfo());
     }
-    public void ProcessAllOrdersParallel(string dirPath)
+    public async Task ProcessAllOrdersParallelAsync(string dirPath)
     {
         var tasks = new List<Task>();
 
         var orderCount = Orders.Count;
+        if (orderCount == 0)
+        {
+            return;
+        }
+
         var threadCount = Environment.ProcessorCount;
         var ordersPerThread = orderCount / threadCount;
         var ordersRemainder = orderCount % threadCount;
@@ -63,15 +68,16 @@ public class Store(List<Product>? products, ConcurrentQueue<Order>? orders) : IS
         for (var i = 0; i < threadCount; i++)
         {
             var threadIndex = i;
+            var count = ordersPerThread + (threadIndex < ordersRemainder ? 1 : 0);
             tasks.Add(Task.Run(async () =>
             {
-                var ordersPerCurrentThread = ordersPerThread + (threadIndex < ordersRemainder ? 1 : 0);
-                for (var j = 0; j < ordersPerCurrentThread; j++)
+                for (var j = 0; j < count; j++)
                 {
-                    Orders.TryDequeue(out var order);
-                    if (order is null) {
-                        throw new ArgumentNullException(paramName: "order");
+                    if (!Orders.TryDequeue(out var order))
+                    {
+                        throw new ArgumentNullException(paramName: nameof(order));
                     }
+
                     var path = Path.Combine(dirPath, $"Order_{threadIndex}_{j}.txt");
                     await order.PrintInfoAsync();
                     await order.ExportToTextAsync(path);
