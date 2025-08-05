@@ -1,10 +1,14 @@
 ﻿using System.Collections.Concurrent;
 using Basics.Interfaces;
 namespace Basics.Classes;
-public class Store(List<Product>? products, ConcurrentQueue<Order>? orders) : IStore, IPrintable, IStoreSearchable
+public class Store(HashSet<Product>? products, ConcurrentQueue<Order>? orders) : IStore, IPrintable, IStoreSearchable
 {
-    public List<Product> Catalogue { get; set; } = products ?? [];
+    public HashSet<Product> Catalogue { get; set; } = products ?? [];
     public ConcurrentQueue<Order> Orders { get; set; } = orders ?? [];
+    public Store(ConcurrentQueue<Order> orders) : this(
+        orders.SelectMany(o => o.Products.Keys).ToHashSet(),
+        orders
+    ) { }
     public void AddProduct(Product product)
     {
         Catalogue.Add(product);
@@ -62,25 +66,19 @@ public class Store(List<Product>? products, ConcurrentQueue<Order>? orders) : IS
         }
 
         var threadCount = Environment.ProcessorCount;
-        var ordersPerThread = orderCount / threadCount;
-        var ordersRemainder = orderCount % threadCount;
 
         for (var i = 0; i < threadCount; i++)
         {
             var threadIndex = i;
-            var count = ordersPerThread + (threadIndex < ordersRemainder ? 1 : 0);
             tasks.Add(Task.Run(async () =>
             {
-                for (var j = 0; j < count; j++)
+                var orderIndex = 0;
+                while (Orders.TryDequeue(out var order))
                 {
-                    if (!Orders.TryDequeue(out var order))
-                    {
-                        throw new ArgumentNullException(paramName: nameof(order));
-                    }
-
-                    var path = Path.Combine(dirPath, $"Order_{threadIndex}_{j}.txt");
-                    await order.PrintInfoAsync();
-                    await order.ExportToTextAsync(path);
+                    var path = Path.Combine(dirPath, $"Order_{threadIndex}_{orderIndex}.txt");
+                    //await order.PrintInfoAsync().ConfigureAwait(false);
+                    await order.ExportToTextAsync(path).ConfigureAwait(false);
+                    orderIndex++;
                 }
             }));
         }
