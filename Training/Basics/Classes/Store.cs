@@ -55,15 +55,15 @@ public class Store(HashSet<Product>? products, ConcurrentQueue<Order>? orders) :
     {
         Orders.ToList().ForEach(o => o.PrintInfo());
     }
-    public async Task ProcessAllOrdersParallelAsync(string dirPath)
+    public void ProcessAllOrdersParallel(string dirPath)
     {
-        var tasks = new List<Task>();
-
         var orderCount = Orders.Count;
-        if (orderCount == 0)
-        {
-            return;
-        }
+        if (orderCount == 0) return;
+
+        Parallel.ForEach(
+            
+            
+        );
 
         var threadCount = Environment.ProcessorCount;
 

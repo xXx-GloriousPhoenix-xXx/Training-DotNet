@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\basics\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\basics\\services\\producthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\services\\producthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\basics\\services\\libraryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\services\\libraryhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\basics\\classes\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\classes\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\basics\\classes\\store.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\classes\\store.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\basics\\services\\orderhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\services\\orderhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\basics\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,28 +43,65 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ProductHandler.cs",
+              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Services\\ProductHandler.cs",
+              "RelativeDocumentMoniker": "Basics\\Services\\ProductHandler.cs",
+              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Services\\ProductHandler.cs",
+              "RelativeToolTip": "Basics\\Services\\ProductHandler.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-05T20:28:23.085Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "OrderHandler.cs",
+              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Services\\OrderHandler.cs",
+              "RelativeDocumentMoniker": "Basics\\Services\\OrderHandler.cs",
+              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Services\\OrderHandler.cs",
+              "RelativeToolTip": "Basics\\Services\\OrderHandler.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAQwCcAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-05T18:25:46.449Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Order.cs",
+              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Classes\\Order.cs",
+              "RelativeDocumentMoniker": "Basics\\Classes\\Order.cs",
+              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Classes\\Order.cs",
+              "RelativeToolTip": "Basics\\Classes\\Order.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-05T18:23:32.318Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Store.cs",
+              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Classes\\Store.cs",
+              "RelativeDocumentMoniker": "Basics\\Classes\\Store.cs",
+              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Classes\\Store.cs",
+              "RelativeToolTip": "Basics\\Classes\\Store.cs",
+              "ViewState": "AQIAAEIAAAAAAAAAAAAiwFkAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-05T11:59:14.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Program.cs",
               "RelativeDocumentMoniker": "Basics\\Program.cs",
               "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Program.cs",
               "RelativeToolTip": "Basics\\Program.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAswDIAAAA/AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T21:28:45.676Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "LibraryHandler.cs",
-              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Services\\LibraryHandler.cs",
-              "RelativeDocumentMoniker": "Basics\\Services\\LibraryHandler.cs",
-              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Services\\LibraryHandler.cs",
-              "RelativeToolTip": "Basics\\Services\\LibraryHandler.cs",
-              "ViewState": "AQIAACMAAAAAAAAAAAAgwCoAAABQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-04T21:28:10.239Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-04T21:28:45.676Z"
             }
           ]
         }
