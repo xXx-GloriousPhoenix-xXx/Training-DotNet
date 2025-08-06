@@ -85,4 +85,18 @@ public class Store(HashSet<Product>? products, ConcurrentQueue<Order>? orders) :
 
         await Task.WhenAll(tasks);
     }
+    //public void ProcessAllOrdersParallel(string dirPath)
+    //{
+    //    var orderCount = Orders.Count;
+    //    if (orderCount == 0) return;
+
+    //    Parallel.For(0, orderCount, new ParallelOptions
+    //    {
+    //        MaxDegreeOfParallelism = Environment.ProcessorCount
+    //    },
+    //    i =>
+    //    {
+
+    //    });
+    //}
 }

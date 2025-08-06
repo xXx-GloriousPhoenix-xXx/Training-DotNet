@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\basics\\classes\\store.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\classes\\store.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\basics\\services\\producthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\services\\producthandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\basics\\services\\orderhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\services\\orderhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\basics\\classes\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\classes\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\basics\\classes\\store.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\classes\\store.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\basics\\services\\orderhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|solutionrelative:basics\\services\\orderhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D920E28-ABE5-44B2-983C-FA07278E99A8}|Basics\\Basics.csproj|F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\basics\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 450,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,20 +42,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ProductHandler.cs",
               "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Services\\ProductHandler.cs",
               "RelativeDocumentMoniker": "Basics\\Services\\ProductHandler.cs",
               "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Services\\ProductHandler.cs",
               "RelativeToolTip": "Basics\\Services\\ProductHandler.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-05T20:28:23.085Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "OrderHandler.cs",
               "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Services\\OrderHandler.cs",
               "RelativeDocumentMoniker": "Basics\\Services\\OrderHandler.cs",
@@ -63,30 +63,30 @@
               "RelativeToolTip": "Basics\\Services\\OrderHandler.cs",
               "ViewState": "AQIAABAAAAAAAAAAAAAQwCcAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-05T18:25:46.449Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-05T18:25:46.449Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Order.cs",
               "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Classes\\Order.cs",
               "RelativeDocumentMoniker": "Basics\\Classes\\Order.cs",
               "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Classes\\Order.cs",
               "RelativeToolTip": "Basics\\Classes\\Order.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-05T18:23:32.318Z"
+              "WhenOpened": "2025-08-05T18:23:32.318Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Store.cs",
               "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Classes\\Store.cs",
               "RelativeDocumentMoniker": "Basics\\Classes\\Store.cs",
               "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Classes\\Store.cs",
               "RelativeToolTip": "Basics\\Classes\\Store.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD4AAAAcAAAA",
+              "ViewState": "AQIAAEIAAAAAAAAAAAAiwFkAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-05T11:59:14.921Z",
               "EditorCaption": ""
