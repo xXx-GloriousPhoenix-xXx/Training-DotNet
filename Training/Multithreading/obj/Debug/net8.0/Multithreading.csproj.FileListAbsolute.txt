@@ -1,0 +1,15 @@
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\obj\Debug\net8.0\Multithreading.GeneratedMSBuildEditorConfig.editorconfig
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\obj\Debug\net8.0\Multithreading.AssemblyInfoInputs.cache
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\obj\Debug\net8.0\Multithreading.AssemblyInfo.cs
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\obj\Debug\net8.0\Multithreading.csproj.CoreCompileInputs.cache
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\obj\Debug\net8.0\Multithreading.sourcelink.json
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\bin\Debug\net8.0\Multithreading.exe
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\bin\Debug\net8.0\Multithreading.deps.json
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\bin\Debug\net8.0\Multithreading.runtimeconfig.json
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\bin\Debug\net8.0\Multithreading.dll
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\bin\Debug\net8.0\Multithreading.pdb
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\obj\Debug\net8.0\Multithreading.dll
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\obj\Debug\net8.0\refint\Multithreading.dll
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\obj\Debug\net8.0\Multithreading.pdb
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\obj\Debug\net8.0\Multithreading.genruntimeconfig.cache
+F:\Programmes\Github\Reps\Training-DotNet\Training\Multithreading\obj\Debug\net8.0\ref\Multithreading.dll

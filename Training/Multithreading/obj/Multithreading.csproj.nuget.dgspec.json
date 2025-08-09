@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj": {}
+    "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Multithreading.csproj": {}
   },
   "projects": {
-    "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj": {
+    "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Multithreading.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj",
-        "projectName": "Basics",
-        "projectPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\Basics.csproj",
+        "projectUniqueName": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Multithreading.csproj",
+        "projectName": "Multithreading",
+        "projectPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Multithreading.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Basics\\obj\\",
+        "outputPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Games\\Visual Studio\\Installed\\Components\\NuGetPackages"
@@ -49,12 +49,6 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "dependencies": {
-            "Newtonsoft.Json": {
-              "target": "Package",
-              "version": "[13.0.3, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",

@@ -1,0 +1,18 @@
+﻿using Multithreading.Classes;
+using Multithreading.Contexts;
+namespace Multithreading.Services;
+
+public static class PaymentService
+{
+    public static void ProcessPayment(Order order)
+    {
+        var message = "Processing payment";
+        var orderId = order.Id;
+        var processTime = 300;
+        var info = new LimitedOrderOpeartionContext(message, orderId);
+        info.WrapOperation(() =>
+        {
+            Thread.Sleep(processTime);
+        });
+    }
+}

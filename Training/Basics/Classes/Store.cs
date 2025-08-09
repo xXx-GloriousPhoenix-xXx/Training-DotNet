@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using Basics.Interfaces;
 namespace Basics.Classes;
 public class Store(HashSet<Product>? products, ConcurrentQueue<Order>? orders) : IStore, IPrintable, IStoreSearchable
@@ -60,43 +61,26 @@ public class Store(HashSet<Product>? products, ConcurrentQueue<Order>? orders) :
         var orderCount = Orders.Count;
         if (orderCount == 0) return;
 
-        Parallel.ForEach(
-            
-            
-        );
-
-        var threadCount = Environment.ProcessorCount;
-
-        for (var i = 0; i < threadCount; i++)
+        var orderPartitioner = Partitioner.Create(Orders);
+        Parallel.ForEach(orderPartitioner, (order, index) =>
         {
-            var threadIndex = i;
-            tasks.Add(Task.Run(async () =>
-            {
-                var orderIndex = 0;
-                while (Orders.TryDequeue(out var order))
-                {
-                    var path = Path.Combine(dirPath, $"Order_{threadIndex}_{orderIndex}.txt");
-                    //await order.PrintInfoAsync().ConfigureAwait(false);
-                    await order.ExportToTextAsync(path).ConfigureAwait(false);
-                    orderIndex++;
-                }
-            }));
-        }
-
-        await Task.WhenAll(tasks);
+            var path = Path.Combine(dirPath, $"Order_{index}.txt");
+            order.ExportToText(path);
+        });
     }
-    //public void ProcessAllOrdersParallel(string dirPath)
-    //{
-    //    var orderCount = Orders.Count;
-    //    if (orderCount == 0) return;
+    public async Task ProcessAllOrdersParallelAsync(string dirPath)
+    {
+        var orderCount = Orders.Count;
+        if (orderCount == 0) return;
 
-    //    Parallel.For(0, orderCount, new ParallelOptions
-    //    {
-    //        MaxDegreeOfParallelism = Environment.ProcessorCount
-    //    },
-    //    i =>
-    //    {
-
-    //    });
-    //}
+        await Parallel.ForEachAsync(
+            Orders.Select((order, index) => (order, index)),
+            new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount },
+            async (item, token) =>
+            {
+                var path = Path.Combine(dirPath, $"Order_{item.index}.txt");
+                await item.order.ExportToTextAsync(path);
+            }
+        );
+    }
 }

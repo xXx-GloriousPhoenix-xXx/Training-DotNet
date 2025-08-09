@@ -1,0 +1,175 @@
+using Multithreading.Interfaces;
+using Multithreading.Contexts;
+
+namespace Multithreading.Classes;
+public class Order(int id, string customer, decimal cost) : IOrderable
+{
+    public int Id { get; set; } = id;
+    public string Customer { get; set; } = customer;
+    public decimal Cost { get; set; } = cost;
+    public void Process()
+    {        
+        var message = "Processing";
+        var info = new DetailedOrderOperationContext(message, Id, Customer);
+        info.WrapOperation(() =>
+        {
+            Thread.Sleep((int)Cost);
+        });
+    }
+}
+namespace Multithreading.Classes;
+
+public static class OrderGenerator
+{
+    public static IEnumerable<Order> Generate(int count)
+    {
+        var rnd = Random.Shared;
+        for (var i = 0; i < count; i++)
+        {
+            var id = i;
+            var customer = $"Customer_{i}";
+            var cost = 100m * rnd.Next(5, 11);
+            Console.WriteLine($"Generated order #{i} cost={cost}");
+            yield return new Order(id, customer, cost);
+        }
+    }
+}
+using Multithreading.Interfaces;
+
+namespace Multithreading.Contexts;
+public class DetailedOrderOperationContext(string operationMessage, int orderId, string customer)
+    : OrderOperationContext, IDetailedOrderOperationContext
+{
+    public override string OperationMessage { get; set; } = operationMessage;
+    public override int OrderId { get; set; } = orderId;
+    public string Customer { get; set; } = customer;
+    public override string GetExtraInfo() => $"for customer «{Customer}»";
+}using Multithreading.Interfaces;
+
+namespace Multithreading.Contexts;
+
+public class LimitedOrderOpeartionContext(string operationMessage, int orderId)
+    : OrderOperationContext, ILimitedOrderOperationContext
+{
+    public override string OperationMessage { get; set; } = operationMessage;
+    public override int OrderId { get; set; } = orderId;
+
+}
+using Multithreading.Interfaces;
+
+namespace Multithreading.Contexts;
+
+public abstract class OrderOperationContext : IWrapperable
+{
+    public abstract string OperationMessage { get; set; }
+    public abstract int OrderId { get; set; }
+    public virtual string GetExtraInfo() => string.Empty;
+    public void PrintOperationMessage(bool isFinished, long elapsedMs = 0)
+    {
+        var time = DateTime.Now;
+        var message = $"[{time:HH:mm:ss.fff}]";
+        message += $"[Thread {Environment.CurrentManagedThreadId}]";
+        message += $" {OperationMessage}";
+        message += $"for order #{OrderId}";
+
+        var extraInfo = GetExtraInfo();
+        if (!string.IsNullOrEmpty(extraInfo))
+            message += $" {extraInfo}";
+
+        message += isFinished ? $" END (took {elapsedMs} ms)" : " START";
+        Console.WriteLine(message);
+    }
+    public void WrapOperation(Action internalFunction)
+    {
+
+        PrintOperationMessage(false);
+        var sw = System.Diagnostics.Stopwatch.StartNew();
+
+        internalFunction();
+
+        sw.Stop();
+        PrintOperationMessage(true, sw.ElapsedMilliseconds);
+    }
+}
+namespace Multithreading.Interfaces;
+
+public interface IDetailedOrderOperationContext : ILimitedOrderOperationContext
+{
+    public string Customer { get; set; }
+}
+namespace Multithreading.Interfaces;
+
+public interface ILimitedOrderOperationContext
+{
+    public string OperationMessage { get; set; }
+    public int OrderId { get; set; }
+}
+namespace Multithreading.Interfaces;
+
+public interface IOrderable
+{
+    public int Id { get; set; }
+    public string Customer { get; set; }
+    public decimal Cost { get; set; }
+    public void Process();
+}
+namespace Multithreading.Interfaces;
+public interface IWrapperable
+{
+    public void PrintOperationMessage(bool isFinished, long elapsedMs = 0);
+    public void WrapOperation(Action internalFunction);
+}
+using Multithreading.Classes;
+using Multithreading.Contexts;
+namespace Multithreading.Services;
+
+public static class NotificationService
+{
+    public static void SendNotification(Order order)
+    {
+        var message = "Sending notification";
+        var orderId = order.Id;
+        var processTime = 200;
+        var info = new LimitedOrderOpeartionContext(message, orderId);
+        info.WrapOperation(() =>
+        {
+            Thread.Sleep(processTime);
+        });
+    }
+}
+using Multithreading.Classes;
+using Multithreading.Contexts;
+namespace Multithreading.Services;
+
+public static class PaymentService
+{
+    public static void ProcessPayment(Order order)
+    {
+        var message = "Processing payment";
+        var orderId = order.Id;
+        var processTime = 300;
+        var info = new LimitedOrderOpeartionContext(message, orderId);
+        info.WrapOperation(() =>
+        {
+            Thread.Sleep(processTime);
+        });
+    }
+}
+namespace Multithreading.Utilities;
+public static class MergeUtility
+{
+    public static void MergeAllFiles(string destinationPath = "../../../Utilities/Result/MergeResult.txt")
+    {
+        var dirs = Directory.GetDirectories("../../../")
+            .Where(d => !d.Contains("bin") && !d.Contains("obj") && !d.Contains(".vs"));
+        using var sw = new StreamWriter(destinationPath);
+        foreach (var dir in dirs)
+        {
+            foreach (var file in Directory.GetFiles(dir))
+            {
+                using var sr = new StreamReader(file);
+                sw.Write(sr.ReadToEnd());
+            }
+        }
+    }
+}
