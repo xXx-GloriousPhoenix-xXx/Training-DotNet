@@ -1,4 +1,4 @@
-﻿using Multithreading.Contexts;
+﻿using Multithreading.General.Contexts;
 using Multithreading.General.Interfaces;
 
 namespace Multithreading.General.Classes;

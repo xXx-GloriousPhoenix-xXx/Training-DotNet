@@ -14,11 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Tasks\Tasks.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Tasks\Tasks.txt" />
+    <None Include="Tasks\Tasks.md" />
   </ItemGroup>
 
   <ItemGroup>

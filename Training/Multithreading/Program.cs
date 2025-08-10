@@ -2,7 +2,6 @@
 using Multithreading.General.Utilities;
 using Multithreading.General.Classes;
 using Multithreading.General.Services;
-using System.Threading.Tasks;
 namespace Multithreading;
 public static class Test
 {
@@ -25,7 +24,7 @@ public static class Test
         var limitedScheduler = new LimitedConcurrencyLevelTaskScheduler(3);
         
         var tasks = orders.Select(order =>
-            System.Threading.Tasks.Task.Factory.StartNew(() => order.Process(),
+            Task.Factory.StartNew(() => order.Process(),
                 CancellationToken.None,
                 TaskCreationOptions.None,
                 TaskScheduler.Default
@@ -42,7 +41,7 @@ public static class Test
             )
         );
 
-        await System.Threading.Tasks.Task.WhenAll(tasks);
+        await Task.WhenAll(tasks);
     }
     public static void Measure(Action operation)
     {

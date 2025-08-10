@@ -1,7 +1,7 @@
 ﻿namespace Multithreading.General.Utilities;
 public static class MergeUtility
 {
-    public static void MergeAllFiles(string destinationPath = "../../../Utilities/Result/MergeResult.txt")
+    public static void MergeAllFiles(string destinationPath = "../../../General/Utilities/Result/MergeResult.txt")
     {
         var dirs = Directory.GetDirectories("../../../")
             .Where(d => !d.Contains("bin") && !d.Contains("obj") && !d.Contains(".vs"));

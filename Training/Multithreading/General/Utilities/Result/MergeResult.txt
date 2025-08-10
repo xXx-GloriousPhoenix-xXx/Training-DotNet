@@ -1,259 +1,93 @@
-using Multithreading.Interfaces;
-using Multithreading.Contexts;
+Расскажи что мне стоит знать в многопоточности и что нужно изучить (C#)
 
-namespace Multithreading.Classes;
-public class Order(int id, string customer, decimal cost) : IOrderable
-{
-    public int Id { get; set; } = id;
-    public string Customer { get; set; } = customer;
-    public decimal Cost { get; set; } = cost;
-    public void Process()
-    {        
-        var message = "Processing";
-        var info = new DetailedOrderOperationContext(message, Id, Customer);
-        info.WrapOperation(() =>
-        {
-            Thread.Sleep((int)Cost);
-        });
-    }
-}
-namespace Multithreading.Classes;
+Многопоточность в C# — это обширная тема, которая критически важна для создания эффективных приложений. Вот структурированный путь изучения:
+Основы, которые нужно понимать
 
-public static class OrderGenerator
-{
-    public static IEnumerable<Order> Generate(int count)
-    {
-        var rnd = Random.Shared;
-        for (var i = 0; i < count; i++)
-        {
-            var id = i;
-            var customer = $"Customer_{i}";
-            var cost = 100m * rnd.Next(5, 11);
-            Console.WriteLine($"Generated order #{i} cost={cost}");
-            yield return new Order(id, customer, cost);
-        }
-    }
-}
-using Multithreading.Interfaces;
+Базовые концепции:
 
-namespace Multithreading.Contexts;
-public class DetailedOrderOperationContext(string operationMessage, int orderId, string customer)
-    : OrderOperationContext, IDetailedOrderOperationContext
-{
-    public override string OperationMessage { get; set; } = operationMessage;
-    public override int OrderId { get; set; } = orderId;
-    public string Customer { get; set; } = customer;
-    public override string GetExtraInfo() => $"for customer «{Customer}»";
-}using Multithreading.Interfaces;
+    Что такое поток (Thread) и чем он отличается от процесса
+    Разница между параллелизмом и конкурентностью
+    Понятие Thread Pool и зачем он нужен
+    Контекст синхронизации (SynchronizationContext)
 
-namespace Multithreading.Contexts;
+Проблемы многопоточности:
 
-public class LimitedOrderOpeartionContext(string operationMessage, int orderId)
-    : OrderOperationContext, ILimitedOrderOperationContext
-{
-    public override string OperationMessage { get; set; } = operationMessage;
-    public override int OrderId { get; set; } = orderId;
+    Race conditions (состояние гонки)
+    Deadlocks (взаимоблокировки)
+    Starvation (голодание потоков)
+    Context switching и его стоимость
 
-}
-using Multithreading.Interfaces;
+Что изучать поэтапно
 
-namespace Multithreading.Contexts;
+1. Базовый уровень:
 
-public abstract class OrderOperationContext : IWrapperable
-{
-    public abstract string OperationMessage { get; set; }
-    public abstract int OrderId { get; set; }
-    public virtual string GetExtraInfo() => string.Empty;
-    public void PrintOperationMessage(bool isFinished, long elapsedMs = 0)
-    {
-        var time = DateTime.Now;
-        var message = $"[{time:HH:mm:ss.fff}]";
-        message += $"[Thread {Environment.CurrentManagedThreadId}]";
-        message += $" {OperationMessage}";
-        message += $"for order #{OrderId}";
+    Класс Thread — создание и управление потоками
+    ThreadStart и ParameterizedThreadStart делегаты
+    Методы Join(), Sleep(), Abort() (deprecated)
+    Свойства потоков: IsAlive, Priority, IsBackground
 
-        var extraInfo = GetExtraInfo();
-        if (!string.IsNullOrEmpty(extraInfo))
-            message += $" {extraInfo}";
+2. Синхронизация потоков:
 
-        message += isFinished ? $" END (took {elapsedMs} ms)" : " START";
-        Console.WriteLine(message);
-    }
-    public void WrapOperation(Action internalFunction)
-    {
+    lock statement (самое важное для начала)
+    Monitor класс — более гибкая альтернатива lock
+    Mutex, Semaphore, AutoResetEvent, ManualResetEvent
+    ReaderWriterLockSlim для сценариев чтения/записи
+    Interlocked класс для атомарных операций
 
-        PrintOperationMessage(false);
-        var sw = System.Diagnostics.Stopwatch.StartNew();
+3. Современный подход (это приоритет):
 
-        internalFunction();
+    async/await — асинхронное программирование
+    Task и Task<T> классы
+    Task.Run(), Task.Factory.StartNew()
+    ConfigureAwait(false) и почему это важно
+    Обработка исключений в асинхронном коде
 
-        sw.Stop();
-        PrintOperationMessage(true, sw.ElapsedMilliseconds);
-    }
-}
-namespace Multithreading.Interfaces;
+4. Параллельное программирование:
 
-public interface IDetailedOrderOperationContext : ILimitedOrderOperationContext
-{
-    public string Customer { get; set; }
-}
-namespace Multithreading.Interfaces;
+    Parallel класс: ForEach(), For(), Invoke()
+    PLINQ (Parallel LINQ)
+    CancellationToken для отмены операций
+    Progress<T> для отчетности о прогрессе
 
-public interface ILimitedOrderOperationContext
-{
-    public string OperationMessage { get; set; }
-    public int OrderId { get; set; }
-}
-namespace Multithreading.Interfaces;
+5. Коллекции для многопоточности:
 
-public interface IOrderable
-{
-    public int Id { get; set; }
-    public string Customer { get; set; }
-    public decimal Cost { get; set; }
-    public void Process();
-}
-namespace Multithreading.Interfaces;
-public interface IWrapperable
-{
-    public void PrintOperationMessage(bool isFinished, long elapsedMs = 0);
-    public void WrapOperation(Action internalFunction);
-}
-using Multithreading.Classes;
-using Multithreading.Contexts;
-namespace Multithreading.Services;
+    ConcurrentQueue<T>, ConcurrentStack<T>
+    ConcurrentDictionary<TKey, TValue>
+    BlockingCollection<T>
+    Channel<T> (более современная альтернатива)
 
-public static class NotificationService
-{
-    public static void SendNotification(Order order)
-    {
-        var message = "Sending notification";
-        var orderId = order.Id;
-        var processTime = 200;
-        var info = new LimitedOrderOpeartionContext(message, orderId);
-        info.WrapOperation(() =>
-        {
-            Thread.Sleep(processTime);
-        });
-    }
-}using Multithreading.Classes;
-using Multithreading.Contexts;
-namespace Multithreading.Services;
+6. Продвинутые темы:
 
-public static class PaymentService
-{
-    public static void ProcessPayment(Order order)
-    {
-        var message = "Processing payment";
-        var orderId = order.Id;
-        var processTime = 300;
-        var info = new LimitedOrderOpeartionContext(message, orderId);
-        info.WrapOperation(() =>
-        {
-            Thread.Sleep(processTime);
-        });
-    }
-}
-namespace Multithreading.Utilities;
+    TaskScheduler — управление выполнением задач
+    AsyncLocal<T> — локальные данные для асинхронного контекста
+    SemaphoreSlim — асинхронная версия семафора
+    ConfigureAwait и работа с UI потоками
 
-public sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
-{
-    private readonly int _maxDegreeOfParallelism;
-    private readonly LinkedList<Task> _tasks = [];
-    private int _runningTasks = 0;
-    private readonly object _lock = new();
-    public override int MaximumConcurrencyLevel => _maxDegreeOfParallelism;
-    public LimitedConcurrencyLevelTaskScheduler(int maxDegreeOfParallelism)
-    {
-        ArgumentOutOfRangeException.ThrowIfLessThan(maxDegreeOfParallelism, 1);
-        _maxDegreeOfParallelism = maxDegreeOfParallelism;
-    }
-    protected override IEnumerable<Task>? GetScheduledTasks()
-    {
-        lock (_lock)
-        {
-            return [.. _tasks];
-        }
-    }
-    protected override void QueueTask(Task task)
-    {
-        lock (_lock)
-        {
-            _tasks.AddLast(task);
-            if (_runningTasks < _maxDegreeOfParallelism)
-            {
-                StartNewTask();
-            }
-        }
-    }
-    protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
-    {
-        if (_runningTasks >= _maxDegreeOfParallelism)
-        {
-            return false;
-        }
-        if (taskWasPreviouslyQueued)
-        {
-            lock (_lock)
-            {
-                _tasks.Remove(task);
-            }
-        }
-        return TryExecuteTask(task);
-    }
-    private void StartNewTask()
-    {
-        Task? nextTask = null;
-        lock (_lock)
-        {
-            if (_tasks.Count > 0)
-            {
-                nextTask = _tasks.First!.Value;
-                _tasks.RemoveFirst();
-                _runningTasks++;
-            }
-        }
-        if (nextTask is not null)
-        {
-            ThreadPool.UnsafeQueueUserWorkItem(_ =>
-            {
-                try
-                {
-                    TryExecuteTask(nextTask);
-                }
-                finally
-                {
-                    TaskCompleted();
-                }
-            }, null);
-        }
-    }
-    private void TaskCompleted()
-    {
-        lock (_lock)
-        {
-            _runningTasks--;
-            if (_tasks.Count > 0)
-            {
-                StartNewTask();
-            }
-        }
-    }
-}namespace Multithreading.Utilities;
-public static class MergeUtility
-{
-    public static void MergeAllFiles(string destinationPath = "../../../Utilities/Result/MergeResult.txt")
-    {
-        var dirs = Directory.GetDirectories("../../../")
-            .Where(d => !d.Contains("bin") && !d.Contains("obj") && !d.Contains(".vs"));
-        using var sw = new StreamWriter(destinationPath);
-        foreach (var dir in dirs)
-        {
-            foreach (var file in Directory.GetFiles(dir))
-            {
-                using var sr = new StreamReader(file);
-                sw.Write(sr.ReadToEnd());
-            }
-        }
-    }
-}
+Практические рекомендации
+
+Начни с async/await, а не с Thread класса. Это современный стандарт в C# и покрывает 90% сценариев использования.
+
+Золотые правила:
+
+    Избегай Thread.Sleep() — используй await Task.Delay()
+    Не блокируй UI поток долгими операциями
+    Всегда используй ConfigureAwait(false) в библиотечном коде
+    Предпочитай Task.Run() вместо создания новых потоков
+    Используй CancellationToken для отмены длительных операций
+
+Частые ошибки новичков:
+
+    Блокировка асинхронного кода через .Result или .Wait()
+    Забывание про ConfigureAwait(false)
+    Использование async void (только для event handlers)
+    Неправильное управление исключениями в async методах
+
+Порядок изучения:
+
+    Сначала изучи async/await и Task
+    Потом базовую синхронизацию (lock, SemaphoreSlim)
+    Затем Parallel класс и PLINQ
+    В последнюю очередь — низкоуровневые примитивы
+
+Многопоточность требует много практики, поэтому обязательно пиши небольшие примеры и эксперименты для каждой изученной концепции.
+Это поможет глубже понять, как всё работает на практике.
