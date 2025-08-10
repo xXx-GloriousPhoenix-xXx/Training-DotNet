@@ -16,3 +16,14 @@
 * Context switching и его стоимость
 
 ## Что изучать поэтапно
+<ol>
+    <li>
+        Базовый уровень:
+        <ul>
+            <li>Класс Thread — создание и управление потоками</li>
+            <li>ThreadStart и ParameterizedThreadStart делегаты</li>
+            <li>Методы Join(), Sleep(), Abort() (deprecated)</li>
+            <li>Свойства потоков: IsAlive, Priority, IsBackground</li>
+        </ul>
+    </li>
+</ol>
