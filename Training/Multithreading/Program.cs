@@ -1,6 +1,7 @@
 ﻿using Multithreading.Utilities;
 using Multithreading.Classes;
 using System.Diagnostics;
+using Multithreading.Services;
 
 namespace Multithreading;
 public static class Test
@@ -9,12 +10,39 @@ public static class Test
     {
         MergeUtility.MergeAllFiles();
 
-        var orders = OrderGenerator.Generate(10);
+        Measure(async () =>
+        {
+            await ExecutePipeline();
+        });
+    }
+    public static async Task ExecutePipeline()
+    {
+        var orders = OrderGenerator.Generate(100);
 
         var pair = new ConcurrentExclusiveSchedulerPair(TaskScheduler.Default, maxConcurrencyLevel: 1);
         var exclusiveScheduler = pair.ExclusiveScheduler;
 
         var limitedScheduler = new LimitedConcurrencyLevelTaskScheduler(3);
+
+        var tasks = orders.Select(order =>
+            Task.Factory.StartNew(() => order.Process(),
+                CancellationToken.None,
+                TaskCreationOptions.None,
+                TaskScheduler.Default
+            )
+            .ContinueWith(_ => PaymentService.ProcessPayment(order),
+                CancellationToken.None,
+                TaskContinuationOptions.None,
+                exclusiveScheduler
+            )
+            .ContinueWith(_ => NotificationService.SendNotification(order),
+                CancellationToken.None,
+                TaskContinuationOptions.None,
+                limitedScheduler
+            )
+        );
+
+        await Task.WhenAll(tasks);
     }
     public static void Measure(Action operation)
     {
@@ -22,28 +50,5 @@ public static class Test
         operation();
         sw.Stop();
         Console.WriteLine($"Total time taken: {sw.ElapsedMilliseconds} ms");
-    }
-}
-public sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
-{
-    private readonly int _maxDegreeOfParallelism;
-    private readonly LinkedList<Task> _tasks = [];
-    private int _runningTasks = 0;
-    public LimitedConcurrencyLevelTaskScheduler(int maxDegreeOfParallelism)
-    {
-        ArgumentOutOfRangeException.ThrowIfLessThan(maxDegreeOfParallelism, 1);
-        _maxDegreeOfParallelism = maxDegreeOfParallelism;
-    }
-    protected override IEnumerable<Task>? GetScheduledTasks()
-    {
-        return _tasks;
-    }
-    protected override void QueueTask(Task task)
-    {
-        _tasks.AddLast(task);
-    }
-    protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
-    {
-        
     }
 }
