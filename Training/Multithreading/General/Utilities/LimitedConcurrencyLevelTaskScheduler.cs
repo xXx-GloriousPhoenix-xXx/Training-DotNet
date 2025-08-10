@@ -1,4 +1,4 @@
-﻿namespace Multithreading.Utilities;
+﻿namespace Multithreading.General.Utilities;
 
 public sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
 {

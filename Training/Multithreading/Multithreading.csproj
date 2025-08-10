@@ -14,7 +14,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Utilities\Result\" />
+    <None Remove="Tasks\Tasks.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Tasks\Tasks.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Task_1\" />
   </ItemGroup>
 
 </Project>

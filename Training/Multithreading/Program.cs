@@ -1,8 +1,8 @@
-﻿using Multithreading.Utilities;
-using Multithreading.Classes;
-using System.Diagnostics;
-using Multithreading.Services;
-
+﻿using System.Diagnostics;
+using Multithreading.General.Utilities;
+using Multithreading.General.Classes;
+using Multithreading.General.Services;
+using System.Threading.Tasks;
 namespace Multithreading;
 public static class Test
 {
@@ -23,9 +23,9 @@ public static class Test
         var exclusiveScheduler = pair.ExclusiveScheduler;
 
         var limitedScheduler = new LimitedConcurrencyLevelTaskScheduler(3);
-
+        
         var tasks = orders.Select(order =>
-            Task.Factory.StartNew(() => order.Process(),
+            System.Threading.Tasks.Task.Factory.StartNew(() => order.Process(),
                 CancellationToken.None,
                 TaskCreationOptions.None,
                 TaskScheduler.Default
@@ -42,7 +42,7 @@ public static class Test
             )
         );
 
-        await Task.WhenAll(tasks);
+        await System.Threading.Tasks.Task.WhenAll(tasks);
     }
     public static void Measure(Action operation)
     {

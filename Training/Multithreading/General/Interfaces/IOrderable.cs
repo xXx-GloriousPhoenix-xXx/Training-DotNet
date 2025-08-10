@@ -1,4 +1,4 @@
-﻿namespace Multithreading.Interfaces;
+﻿namespace Multithreading.General.Interfaces;
 
 public interface IOrderable
 {

@@ -1,4 +1,4 @@
-﻿namespace Multithreading.Classes;
+﻿namespace Multithreading.General.Classes;
 
 public static class OrderGenerator
 {

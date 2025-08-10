@@ -1,6 +1,6 @@
-﻿using Multithreading.Interfaces;
+﻿using Multithreading.General.Interfaces;
 
-namespace Multithreading.Contexts;
+namespace Multithreading.General.Contexts;
 public class DetailedOrderOperationContext(string operationMessage, int orderId, string customer)
     : OrderOperationContext, IDetailedOrderOperationContext
 {

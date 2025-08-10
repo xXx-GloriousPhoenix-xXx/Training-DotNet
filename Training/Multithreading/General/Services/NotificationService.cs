@@ -1,6 +1,6 @@
-﻿using Multithreading.Classes;
-using Multithreading.Contexts;
-namespace Multithreading.Services;
+﻿using Multithreading.Contexts;
+using Multithreading.General.Classes;
+namespace Multithreading.General.Services;
 
 public static class NotificationService
 {

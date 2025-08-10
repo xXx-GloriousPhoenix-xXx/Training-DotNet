@@ -1,4 +1,4 @@
-﻿namespace Multithreading.Utilities;
+﻿namespace Multithreading.General.Utilities;
 public static class MergeUtility
 {
     public static void MergeAllFiles(string destinationPath = "../../../Utilities/Result/MergeResult.txt")
