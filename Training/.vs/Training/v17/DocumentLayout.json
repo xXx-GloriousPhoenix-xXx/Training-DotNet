@@ -3,14 +3,6 @@
   "WorkspaceRootPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2D0BF907-5377-41CF-9E4C-733A0EA23396}|Multithreading\\Multithreading.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\multithreading\\tasks\\tasks.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
-      "RelativeMoniker": "D:0:0:{2D0BF907-5377-41CF-9E4C-733A0EA23396}|Multithreading\\Multithreading.csproj|solutionrelative:multithreading\\tasks\\tasks.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2D0BF907-5377-41CF-9E4C-733A0EA23396}|Multithreading\\Multithreading.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\multithreading\\general\\utilities\\mergeutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D0BF907-5377-41CF-9E4C-733A0EA23396}|Multithreading\\Multithreading.csproj|solutionrelative:multithreading\\general\\utilities\\mergeutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2D0BF907-5377-41CF-9E4C-733A0EA23396}|Multithreading\\Multithreading.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\multithreading\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D0BF907-5377-41CF-9E4C-733A0EA23396}|Multithreading\\Multithreading.csproj|solutionrelative:multithreading\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -22,34 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 450,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Tasks.md",
-              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Tasks\\Tasks.md",
-              "RelativeDocumentMoniker": "Multithreading\\Tasks\\Tasks.md",
-              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Tasks\\Tasks.md",
-              "RelativeToolTip": "Multithreading\\Tasks\\Tasks.md",
-              "ViewState": "AQIAAB4AAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2025-08-10T19:10:22.361Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MergeUtility.cs",
-              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\General\\Utilities\\MergeUtility.cs",
-              "RelativeDocumentMoniker": "Multithreading\\General\\Utilities\\MergeUtility.cs",
-              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\General\\Utilities\\MergeUtility.cs",
-              "RelativeToolTip": "Multithreading\\General\\Utilities\\MergeUtility.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAABQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-10T18:25:38.95Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{fbcae063-e2c0-4ab1-a516-996ea3dafb72}"
@@ -60,15 +26,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Program.cs",
               "RelativeDocumentMoniker": "Multithreading\\Program.cs",
               "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Program.cs",
               "RelativeToolTip": "Multithreading\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACsAAAAiAAAA",
+              "ViewState": "AQIAAEQAAAAAAAAAAAAAwGQAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-09T10:12:28.228Z",
+              "WhenOpened": "2025-08-11T01:45:24.571Z",
               "EditorCaption": ""
             }
           ]
