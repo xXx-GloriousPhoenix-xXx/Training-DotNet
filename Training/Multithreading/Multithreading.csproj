@@ -14,11 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Tasks\Tasks.md" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Tasks\Task_1\" />
+    <Folder Include="Tasks\Task_3\Data\" />
   </ItemGroup>
 
 </Project>

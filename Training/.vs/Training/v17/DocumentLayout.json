@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{2D0BF907-5377-41CF-9E4C-733A0EA23396}|Multithreading\\Multithreading.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\multithreading\\tasks\\task_3\\task_3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D0BF907-5377-41CF-9E4C-733A0EA23396}|Multithreading\\Multithreading.csproj|solutionrelative:multithreading\\tasks\\task_3\\task_3.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{2D0BF907-5377-41CF-9E4C-733A0EA23396}|Multithreading\\Multithreading.csproj|f:\\programmes\\github\\reps\\training-dotnet\\training\\multithreading\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D0BF907-5377-41CF-9E4C-733A0EA23396}|Multithreading\\Multithreading.csproj|solutionrelative:multithreading\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -27,14 +31,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Task_3.cs",
+              "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Tasks\\Task_3\\Task_3.cs",
+              "RelativeDocumentMoniker": "Multithreading\\Tasks\\Task_3\\Task_3.cs",
+              "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Tasks\\Task_3\\Task_3.cs",
+              "RelativeToolTip": "Multithreading\\Tasks\\Task_3\\Task_3.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAmwCsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-16T02:09:55.962Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Program.cs",
               "RelativeDocumentMoniker": "Multithreading\\Program.cs",
               "ToolTip": "F:\\Programmes\\Github\\Reps\\Training-DotNet\\Training\\Multithreading\\Program.cs",
               "RelativeToolTip": "Multithreading\\Program.cs",
-              "ViewState": "AQIAAEQAAAAAAAAAAAAAwGQAAAAoAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-11T01:45:24.571Z",
+              "WhenOpened": "2025-08-16T01:47:16.645Z",
               "EditorCaption": ""
             }
           ]
